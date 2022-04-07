@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Details</title>
+</head>
+<body>
+
+<h1>Username: {{ user.username}}</h1>
+<h1>First Name: {{ profile.first_name}}</h1>
+
+
+<h2>Do you want to <a href="{% url 'delete profile' %}"> delete your profile</a>?</h2>
+
+
+</body>
+</html>
