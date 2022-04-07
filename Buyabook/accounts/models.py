@@ -33,6 +33,7 @@ class Profile(models.Model):
     FIRST_NAME_MAX_LENGTH = 30
     LAST_NAME_MIN_LENGTH = 3
     LAST_NAME_MAX_LENGTH = 30
+    CITY_MAX_LENGTH = 30
 
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_LENGTH,
@@ -51,7 +52,23 @@ class Profile(models.Model):
     )
 
     email = models.EmailField(
-        unique=True
+        unique=True,
+        help_text='Please, provide a valid email address',
+    )
+
+    phone = models.PositiveIntegerField(
+        null=True,
+        blank=True
+    )
+
+    city = models.CharField(
+        max_length=CITY_MAX_LENGTH,
+        null=True,
+        blank=True
+    )
+    address = models.TextField(
+        null=True,
+        blank=True
     )
 
     user = models.OneToOneField(

@@ -9,4 +9,7 @@ from .models import Profile, BaBUser
 #     if created:
 #         Profile.objects.create(user=instance)
 
-
+# @receiver(post_save, sender=Profile)
+# def delete_user(sender, instance, deleted, **kwargs):
+#     if deleted:
+#         BaBUser.objects.delete(user=instance)

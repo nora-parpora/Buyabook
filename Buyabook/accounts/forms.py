@@ -2,31 +2,8 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 from django.forms import ModelForm
 
-from Buyabook.accounts.helpers import BootstrapFormMixin
+from Buyabook.accounts.helpers import BootstrapFormMixin, DisabledFieldsFormMixin
 from Buyabook.accounts.models import Profile
-
-# class ProfileForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ('first_name', 'last_name', 'email')
-#         widgets = {
-#             'first_name': forms.TextInput(
-#                 attrs={
-#                     'placeholder': 'Enter first name',
-#                 }
-#             ),
-#             'last_name': forms.TextInput(
-#                 attrs={
-#                     'placeholder': 'Enter last name',
-#                 }
-#             ),
-#             'email': forms.EmailInput(
-#                 attrs={
-#
-#                     'placeholder': 'Enter Email',
-#                 }
-#             ),
-#         }
 
 
 class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
@@ -54,6 +31,30 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
             }
         )
     )
+    city = forms.CharField(
+        max_length=Profile.CITY_MAX_LENGTH,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Enter your city here',
+            }
+        )
+    )
+    address = forms.CharField(
+        widget=forms.Textarea(
+            attrs={
+                'placeholder': 'Enter your address here',
+                'rows': 2,
+            }
+        )
+    )
+
+    phone = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'Enter your phone here',
+            }
+        )
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -61,11 +62,13 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=commit)
-
         profile = Profile(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
             email=self.cleaned_data['email'],
+            city = self.cleaned_data['city'],
+            address=self.cleaned_data['address'],
+            phone=self.cleaned_data['phone'],
             user=user,
         )
 
@@ -82,20 +85,34 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
                     'placeholder': 'Enter a username',
                 }
             ),
-            'password1': forms.PasswordInput(
+        }
+
+
+class UpdateProfileForm(BootstrapFormMixin, forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('first_name', 'last_name', 'phone', 'email', 'city', 'address')
+
+        widgets = {
+            'address': forms.Textarea(
                 attrs={
-                    'placeholder': 'Choose password',
+                    'rows': 3,
                 }
             ),
-            # 'password2': forms.TextInput(
-            #     attrs={
-            #         'placeholder': 'Repeat password',
-            #     }
-            # ),
-            # 'email': forms.EmailInput(
-            #     attrs={
-            #
-            #         'placeholder': 'Enter Email',
-            #     }
-            # ),
         }
+
+
+class DeleteProfileForm(BootstrapFormMixin, DisabledFieldsFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+        self._init_disabled_fields()
+
+    def save(self, commit=True):
+        #  TO_DO: Delete all associated books
+        self.instance.delete()
+        return self.instance
+
+    class Meta:
+        model = Profile
+        fields = ('first_name', 'last_name', 'phone', 'email', 'city', 'address')
