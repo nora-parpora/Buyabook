@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-g3n#2@y!7b#8tr83k#fd$7pw6v-(7q6lj7x6%4(gk)y7j1jzjj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1',]
 
 
 # Application definition
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'Buyabook.accounts'
+    'Buyabook.accounts',
+    'Buyabook.books',
 ]
 
 MIDDLEWARE = [
@@ -56,8 +57,7 @@ ROOT_URLCONF = 'Buyabook.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates']        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

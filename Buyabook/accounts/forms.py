@@ -48,8 +48,8 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         )
     )
 
-    phone = forms.IntegerField(
-        widget=forms.NumberInput(
+    phone = forms.CharField(
+        widget=forms.TextInput(
             attrs={
                 'placeholder': 'Enter your phone here',
             }
@@ -96,7 +96,7 @@ class UpdateProfileForm(BootstrapFormMixin, forms.ModelForm):
         widgets = {
             'address': forms.Textarea(
                 attrs={
-                    'rows': 3,
+                    'rows': 1,
                 }
             ),
         }

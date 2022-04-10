@@ -3,11 +3,12 @@ from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView, DetailView, DeleteView
+from django.views.generic import CreateView, TemplateView, UpdateView, DetailView, DeleteView, ListView
 
 from Buyabook.accounts.forms import CreateProfileForm, UpdateProfileForm, DeleteProfileForm
 from Buyabook.accounts.helpers import AuthCheckView
 from Buyabook.accounts.models import Profile, BaBUser
+from Buyabook.books.models import Book
 
 
 class UserRegisterView(CreateView):
@@ -25,6 +26,26 @@ class IndexView(TemplateView, AuthCheckView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        return context
+
+class DashboardView(ListView):
+    template_name = 'my_dashboard.html'
+    queryset = Book.objects.all()
+
+
+    def personal_books(self, obj):
+        books = Book.objects.all().filter(owner_id=self.request.user.pk)
+        return books
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = get_object_or_404(Profile, pk=self.request.user.id)
+        context['profile'] = profile
+        context['bookss'] = Book.objects.filter(owner_id=profile.user.id)
+
+        #books = Book.objects.filter(profile__owner_id=self.request.user.pk)
+        #     #'is_owner': self.object.user_id == self.request.user.id,
         return context
 
 

@@ -3,7 +3,7 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from Buyabook.accounts.views import IndexView, UserRegisterView, UserLoginView, UnauthView, \
-    UpdateProfileView, ChangeUserPasswordView, ProfileDetailsView, DeleteProfileView
+    UpdateProfileView, ChangeUserPasswordView, ProfileDetailsView, DeleteProfileView, DashboardView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
@@ -14,6 +14,7 @@ urlpatterns = [
     path('update-password/', ChangeUserPasswordView.as_view(), name='update password'),
     path('details/', ProfileDetailsView.as_view(), name='profile details'),
     path('delete/', DeleteProfileView.as_view(), name='delete profile'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
 
     path('404/', UnauthView.as_view(), name='404'),
 

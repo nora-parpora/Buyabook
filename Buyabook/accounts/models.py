@@ -53,10 +53,11 @@ class Profile(models.Model):
 
     email = models.EmailField(
         unique=True,
-        help_text='Please, provide a valid email address',
+        #help_text='Please, provide a valid email address',
     )
 
-    phone = models.PositiveIntegerField(
+    phone = models.CharField(
+        max_length=10,
         null=True,
         blank=True
     )
@@ -76,6 +77,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
+
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

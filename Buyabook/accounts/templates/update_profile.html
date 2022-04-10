@@ -1,34 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Profile</title>
-</head>
-<body>
+{%  extends 'base.html' %}
+{% block page_content %}
+
 <div class="container">
 <h3 class="text-center">Update Your Profile</h3>
 
-<div class="select2-container">
+<div class="container-md d-flex aligns-items-center justify-content-center">
+
     <form method="POST"  style='border-top: 1px solid grey; border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
         <div class='row' style= 'padding-top: 1%'>
             <div class="col-lg-1"></div>
             <div class="col-lg-2">
 
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form }}
 
-                <button class="btn btn-primary mt-2" type="submit">Update Profile</button>
+                <button class="btn btn-secondary btn-lg" type="submit">Update Profile</button>
                 <div class="col-lg-1"></div>
             </div>
         </div>
     </form>
+    </div>
 </div>
 
-    <div class="select2-container " style=' border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
-        <h4>You want to change your password? Please click <a href="{% url 'update password' %}"><strong>here</strong></a>.</h4>
+    <div class="container" style=' border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
+        <h5>You want to change your password? Please click <a href="{% url 'update password' %}"><strong>here</strong></a>.</h5>
     </div>
 
 
 </div>
-</body>
-</html>
+{% endblock %}
