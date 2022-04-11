@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+<div class="container-md">
+
+</div>
+    <div class="container">
+<div class="form-group" style=' margin: 3px;  padding: 1% 1% '>
+        <form method="get" action="{% url 'catalogue' %}" class="d-flex form-control me-2">
+{#            <p> Search by Title, Author or Content in the Summary:</p>#}
+            <input name="q" class="form-control me-2" style=' margin: 3px;  padding: 1% 1% ' type="search" placeholder="Search by Title or Author or Content in the Summary" aria-label="Search">
+            <button class="btn btn-outline-secondary" type="submit">Search by Title or Author or Content in the Summary</button>
+        </form>
+    <hr>
+
+        </div>
+ </div>
+
+
+
+<div class="row">
+    {% for book in books %}
+        <div class="card mb-3" style="max-width: 340px;max-height: 450px; border: 1px solid grey;  margin: 30px; ; padding: 1% 1% ">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if book.image %}
+                        <img src="media/{{ book.image }}"  class="img-fluid rounded-start"  alt="...">
+                    {% else %}
+                        <img src="/static/images/book.png"  class="img-fluid rounded-start"  alt="...">
+                    {% endif %}
+                {{ book.owner_id }}
+
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><p5 class="card-title">Name: </p5><b> {{ book.title }}</b></li>
+                            <li class="list-group-item">Category: {{ book.category }}</li>
+                            <li class="list-group-item">Author: {{ book.author }}</li>
+                            <li class="list-group-item">Pages: {{ book.pages }}</li>
+
+                            {% if book.description %}
+                                <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description}}</small></li>
+                            {% endif %}
+                            <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    {% endfor %}
+</div>
+{% endblock %}
