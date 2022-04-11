@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 from django.forms import ModelForm
 
+
 from Buyabook.accounts.helpers import BootstrapFormMixin, DisabledFieldsFormMixin
 from Buyabook.accounts.models import Profile
 
@@ -51,9 +52,8 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     phone = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Enter your phone here',
-            }
-        )
+                'placeholder': '+359XXXXXXXXX',
+            })
     )
 
     def __init__(self, *args, **kwargs):
@@ -97,8 +97,8 @@ class UpdateProfileForm(BootstrapFormMixin, forms.ModelForm):
             'address': forms.Textarea(
                 attrs={
                     'rows': 1,
-                }
-            ),
+                }),
+
         }
 
 

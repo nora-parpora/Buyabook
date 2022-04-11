@@ -1,10 +1,11 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BuyabookApp</title>
+    <title >BuyabookApp</title>
 
     <link rel="stylesheet" href="/static/css/nav.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,20 +16,21 @@
 </head>
 <body>
 <div class="sticky-sm-top">
+
     <!-- 1st Nav Bar starts here -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light " style='border: 1px solid grey;  margin-top: 0.5%; margin-left: 2%;margin-right: 2%;margin-bottom: 1%; padding: 0% 1% '>
+    <nav class='navbar navbar-expand-lg navbar-light bg-light ' style='border: 1px solid lightgrey;  margin-top: 0.5%; margin-left: 2%;margin-right: 2%;margin-bottom: 1%; padding: 0% 1% '>
         <div class="container-fluid">
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#"><b><i>Buyabook </i></b></a>
+            <a class="navbar-brand" style=" color: dimgray " href="{% url 'index' %}"><b><i>Buyabook </i></b></a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
                 <ul class="navbar-nav ms-auto ">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <div class="nav-link" >Hello {{ profile.first_name }}</div>
+                            <div class="nav-link" >Hello {{ user.username }}</div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'profile details' %}">Profile Details</a>
@@ -50,15 +52,16 @@
     </nav>
     <!-- 1st Nav Bar ends here -->
 
+
     <!-- 2nd Nav Bar starts here -->
     {% if user.is_authenticated %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light " style='border: 1px solid grey;  margin: 1% 2%; padding: 0% 1% '>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light " style='border: 1px solid lightgrey;  margin: 1% 2%; padding: 0% 1% '>
             <div class="container-fluid">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'dashboard' %}"><b><i>My Dashboard </i></b></a>
+                <a class="navbar-brand" style=" color: dimgray "href="{% url 'index' %}"><b><i>My Dashboard </i></b></a>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
                     <ul class="navbar-nav ms-auto ">
@@ -66,13 +69,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'add book' %}">Add a book</a>
                         </li>
-                        {#                    <li class="nav-item">#}
-                        {#                        <a class="nav-link" href="{% url 'update profile' %}">Update Profile</a>#}
-                        {#                    </li>#}
-                        {#                    <li class="nav-item">#}
-                        {#                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>#}
-                        {#                    </li>#}
-                        {#                    #}
 
                     </ul>
                 </div>
@@ -83,35 +79,51 @@
 
 
     <!-- 3rd Nav Bar starts here -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light " style='border: 1px solid grey;  margin: 1% 2%; padding: 1% 1% '>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light " style='border: 1px solid lightgrey;   margin: 1% 2%; padding: 0.5% 1% '>
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             {#      <a class="navbar-brand " href="#">Menu</a>#}
-            <a class="nav-item active dropdown">
-                <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Menu</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Active</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Active</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Active</a>
-                    </li>
-
-                </ul></a>
-
+            {#            <a class="nav-item active dropdown">#}
+            {#                <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Menu</a>#}
+            {#                <ul class="dropdown-menu">#}
+            {#                    <li><a class="dropdown-item" href="#">Action</a></li>#}
+            {#                    <li><a class="dropdown-item" href="#">Another action</a></li>#}
+            {#                    <li><a class="dropdown-item" href="#">Something else here</a></li>#}
+            {#                    <li><hr class="dropdown-divider"></li>#}
+            {#                    <li><a class="dropdown-item" href="#">Separated link</a></li>#}
+            {#                    <li class="nav-item">#}
+            {#                        <a class="nav-link active" aria-current="page" href="#">Active</a>#}
+            {#                    </li>#}
+            {#                    <li class="nav-item">#}
+            {#                        <a class="nav-link active" aria-current="page" href="#">Active</a>#}
+            {#                    </li>#}
+            {#                    <li class="nav-item">#}
+            {#                        <a class="nav-link active" aria-current="page" href="#">Active</a>#}
+            {#                    </li>#}
+            {##}
+            {#                </ul></a>#}
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <ul class="nav nav-tabs me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'catalogue' %}">Catalogue</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Categories</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Separated link</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Active</a>
+                            </li>
+
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Active</a>
                     </li>
@@ -193,26 +205,23 @@
 {#<!-- 3rd Nav Bar ends here -->#}
 
 
-
-
-
 <!-- Main Part of the Page -->
-<div class="container">
-    {% block page_content %}
 
+<div class="container ">
 
-
+<div class="p-3 mb-2 bg-light text-dark">.bg-info
+{% block page_content %}
     {% endblock %}
 </div>
-
+</div>
 <!-- End of Main part of the page -->
 
 
 
 
 <!-- Page Footer -->
-<footer class="fixed-bottom card-footer ">
-    <div>@2022 Parpora </div>
+<footer class="fixed-bottom card-footer  ">
+    <div mx-auto>@2022 Parpora </div>
 </footer>
 <!-- End Page Footer -->
 

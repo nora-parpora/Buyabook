@@ -26,7 +26,7 @@ class AddBookForm(forms.ModelForm,BootstrapFormMixin):
 
     class Meta:
         model = Book
-        fields = ('title', 'author', 'description', 'category', 'pages',)
+        fields = ('title', 'author', 'description', 'category', 'pages', 'image')
 
         widgets = {
             'description': forms.Textarea(

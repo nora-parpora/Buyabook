@@ -10,5 +10,5 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(BaBUser)
 class BaBAdmin(admin.ModelAdmin):
-    list_display = ('username',)
+    list_display = ('username', 'id')
 
