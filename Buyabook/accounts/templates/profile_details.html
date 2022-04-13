@@ -1,35 +1,28 @@
 {%  extends 'base.html' %}
 {% block page_content %}
-{% load crispy_forms_tags %}
+    {% load crispy_forms_tags %}
     <div class="container">
 
-        {#<h3>Username: {{ user.username}}</h3>#}
-        {#<h5>First Name: {{ profile.first_name}}</h5>#}
-        <div class = 'form-control'>
 
-            <div class="d-flex justify-content-center" style=' margin: 1% 2%; padding: 2% 2% '>
-                <div class="d-inline p-2 w-40">
-                    <div class="d-flex p-2 flex-column">
-                        <p5>Username: <b>{{ user.username}}</b></p5>
-                        <p5>Name: <b>{{ profile.first_name}} {{ profile.last_name }}</b></p5>
-                        <p5>Email:<b>{{ profile.email}}</b></p5>
-                        <p5>City: <b>{{ profile.city }}</b></p5>
-                        <p5>Address: <b>{{ profile.address }}</b></p5>
+        <div class="d-flex justify-content-center" style=' margin: 1% 2%; padding: 2% 2% '>
+            <div class="d-inline p-2 w-40">
+                <div class="d-flex p-2 flex-column">
+                    <p5>Username: <b>{{ user.username}}</b></p5>
+                    <p5>Name: <b>{{ profile.first_name}} {{ profile.last_name }}</b></p5>
+                    <p5>Email:<b>{{ profile.email}}</b></p5>
+                    <p5>City: <b>{{ profile.city }}</b></p5>
+                    <p5>Address: <b>{{ profile.address }}</b></p5>
+                    {% if profile.phone %}
+                        <p5>Phone: <b>{{ profile.phone }}</b></p5>
+                    {% endif %}
 
-
-                        {% if profile.phone %}
-                            <p5>Phone: <b>{{ profile.phone }}</b></p5>
-                        {% endif %}
-
-                        {% if profile.description %}
-                            <p5>Description: <b>{{ profile.description}}</b></p5>
-                        {% endif %}
-                    </div>
-
-                    <a href="{% url 'update profile' %}" class="btn btn-secondary btn-sm">Change</a>
-                    <a href="{% url 'delete profile' %}" class="btn btn-secondary btn-sm">Delete</a>
-
+                    {% if profile.description %}
+                        <p5>Description: <b>{{ profile.description}}</b></p5>
+                    {% endif %}
                 </div>
+
+                <a href="{% url 'update profile' %}" class="btn btn-secondary btn-sm">Change</a>
+                <a href="{% url 'delete profile' %}" class="btn btn-secondary btn-sm">Delete</a>
 
             </div>
         </div>

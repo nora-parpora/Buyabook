@@ -1,60 +1,75 @@
 {% extends 'base.html' %}
 
 {% block page_content %}
-<div class="container-md">
 
-</div>
     <div class="container">
-<div class="form-group" style=' margin: 3px;  padding: 1% 1% '>
-        <form method="get" action="{% url 'catalogue' %}" class="d-flex form-control me-2">
-{#            <p> Search by Title, Author or Content in the Summary:</p>#}
-            <input name="q" class="form-control me-2" style=' margin: 3px;  padding: 1% 1% ' type="search" placeholder="Search by Title or Author or Content in the Summary" aria-label="Search">
-            <button class="btn btn-outline-secondary" type="submit">Search by Title or Author or Content in the Summary</button>
-        </form>
-    <hr>
-
+        <div class="form-group" style=' margin: 1%;  padding: 0% 0% '>
+            <form method="get" action="{% url 'catalogue' %}" class="d-flex form-control me-2" style=' margin: 1%;  padding: 0% 0%'>
+                {#            <p> Search by Title, Author or Book ID</p>#}
+                <input name="q" class="form-control me-2" style=' margin: 1%;  padding: 1% 1% ' type="search" placeholder="Search by Book ID" aria-label="Search">
+                <button class="btn btn-outline-secondary" style='margin: 1% ' type="submit">Search by Title, Author or Book ID</button>
+            </form>
         </div>
- </div>
+        {#            <div class="form-group" style=' margin: 1%;  padding: 0% 0% '>#}
+        {#                <form method="get" action="{% url 'catalogue' %}" class="d-flex form-control me-2" style=' margin: 1%;  padding: 0% 0%'>#}
+        {#            <p> Search by Title, Author or Content in the Summary:</p>#}
+        {#                    <input name="q" class="form-control me-2" style=' margin: 1%;  padding: 1% 1% ' type="search" placeholder="Search by Title or Author or Content in the Summary, ordered by name" aria-label="Search">#}
+        {#                    <button class="btn btn-outline-secondary" style='margin: 1% ' type="submit">Search by Title or Author or Content in the Summary</button>#}
+        {#                </form>#}
+        {#            </div>#}
+    </div>
 
+    <div class="row justify-content-center">
 
-
-<div class="row">
-    {% for book in books %}
-        <div class="card mb-3" style="max-width: 340px;max-height: 450px; border: 1px solid grey;  margin: 30px; ; padding: 1% 1% ">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    {% if book.image %}
-                        <img src="media/{{ book.image }}"  class="img-fluid rounded-start"  alt="...">
-                    {% else %}
-                        <img src="/static/images/book.png"  class="img-fluid rounded-start"  alt="...">
-                    {% endif %}
-                {{ book.owner_id }}
-
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><p5 class="card-title">Name: </p5><b> {{ book.title }}</b></li>
-                            <li class="list-group-item">Category: {{ book.category }}</li>
-                            <li class="list-group-item">Author: {{ book.author }}</li>
-                            <li class="list-group-item">Pages: {{ book.pages }}</li>
-
-                            {% if book.description %}
-                                <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description}}</small></li>
+        {% if books %}
+            {% for book in books %}
+                <div class="card mb-3 justify-content-center" style="max-width: 330px;max-height: 450px; border: 1px solid grey;  margin: 30px; ; padding: 1% 1% ">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            {% if book.image %}
+                                <img src="media/{{ book.image }}"  class="img-fluid max-width: 100%; and height: auto; img-thumbnail rounded-start"  alt="...">
+                            {% else %}
+                                <img src="/static/images/book.png"  class="img-fluid max-width: 100%; and height: auto; img-thumbnail rounded-start"  alt="...">
                             {% endif %}
-                            <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
+                            <div class="d-flex justify-content-center"><i>Book ID: <b>{{ book.id }}</b></i></div>
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item card-title">Name: <b> {{ book.title }}</b></li>
+                                    <li class="list-group-item">Category: {{ book.category }}</li>
+                                    <li class="list-group-item">Author: {{ book.author }}</li>
+                                    <li class="list-group-item">Pages: {{ book.pages }}</li>
+
+                                    {% if book.description %}
+                                        <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description}}</small></li>
+                                    {% endif %}
+                                    <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>
+                                </ul>
+                            </div>
+
+                            <div class="btn-group d-flex justify-content-center" role="group" aria-label="Third group">
+                                {% if not book.owner == current_user %}
+                                    <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Buy Book</a>
+                                {% else %}
+                                    {% if user.is_authenticated %}
+                                        <a href="{% url 'update book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Edit</a>
+                                        <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Delete</a>
+                                    {% endif %}
+                                {% endif %}
+
+                                <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Details</a>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            {% endfor %}
 
-
-    {% endfor %}
-</div>
+        {% else %}
+            There are no such books.
+        {% endif %}
+    </div>
 {% endblock %}

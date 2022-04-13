@@ -18,13 +18,13 @@
 <div class="sticky-sm-top">
 
     <!-- 1st Nav Bar starts here -->
-    <nav class='navbar navbar-expand-lg navbar-light bg-light ' style='border: 1px solid lightgrey;  margin-top: 0.5%; margin-left: 2%;margin-right: 2%;margin-bottom: 1%; padding: 0% 1% '>
+    <nav class='navbar navbar-expand-lg navbar-light bg-light rounded-3' style='border: 1px solid lightgrey;  margin-top: 0.5%; margin-left: 2%;margin-right: 2%;margin-bottom: 1%; padding: 0% 1% '>
         <div class="container-fluid">
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" style=" color: dimgray " href="{% url 'index' %}"><b><i>Buyabook </i></b></a>
+            <a class="navbar-brand" style=" color: dimgray " href="{% url 'catalogue' %}"><b><i>Buyabook </i></b></a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
                 <ul class="navbar-nav ms-auto ">
@@ -43,7 +43,11 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            <a class="nav-link" href="{% url 'login' %}">Login    </a>
+                        </li>
+                        <li><a class="nav-link" href="#">   </a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -52,10 +56,9 @@
     </nav>
     <!-- 1st Nav Bar ends here -->
 
-
     <!-- 2nd Nav Bar starts here -->
     {% if user.is_authenticated %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light " style='border: 1px solid lightgrey;  margin: 1% 2%; padding: 0% 1% '>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3" style='border: 1px solid lightgrey;  margin: 1% 2%; padding: 0% 1% '>
             <div class="container-fluid">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,36 +80,14 @@
     {% endif %}
     <!-- 2nd Nav Bar ends here -->
 
-
     <!-- 3rd Nav Bar starts here -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light " style='border: 1px solid lightgrey;   margin: 1% 2%; padding: 0.5% 1% '>
-        <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-3 " style='border: 1px solid lightgrey;   margin: 1% 2%; padding: 0.5% 1% '>
+        <div class="container ">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            {#      <a class="navbar-brand " href="#">Menu</a>#}
-            {#            <a class="nav-item active dropdown">#}
-            {#                <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Menu</a>#}
-            {#                <ul class="dropdown-menu">#}
-            {#                    <li><a class="dropdown-item" href="#">Action</a></li>#}
-            {#                    <li><a class="dropdown-item" href="#">Another action</a></li>#}
-            {#                    <li><a class="dropdown-item" href="#">Something else here</a></li>#}
-            {#                    <li><hr class="dropdown-divider"></li>#}
-            {#                    <li><a class="dropdown-item" href="#">Separated link</a></li>#}
-            {#                    <li class="nav-item">#}
-            {#                        <a class="nav-link active" aria-current="page" href="#">Active</a>#}
-            {#                    </li>#}
-            {#                    <li class="nav-item">#}
-            {#                        <a class="nav-link active" aria-current="page" href="#">Active</a>#}
-            {#                    </li>#}
-            {#                    <li class="nav-item">#}
-            {#                        <a class="nav-link active" aria-current="page" href="#">Active</a>#}
-            {#                    </li>#}
-            {##}
-            {#                </ul></a>#}
-
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <ul class="nav nav-tabs me-auto">
+            <div class="collapse navbar-collapse " id="navbarTogglerDemo01">
+                <ul class="nav nav-tabs mx-auto">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'catalogue' %}">Catalogue</a>
                     </li>
@@ -147,81 +128,41 @@
 
                         </ul>
                     </li>
+{#                        <li class="d-flex nav-item ">#}
+{#                            <div class="d-flex ms-auto catalogue.html">#}
+{#                            <form method="get" action="{% url 'catalogue' %}" class="d-flex me-auto">#}
+{#                                <input name="q" class="form-control me-2" type="search" placeholder="Search by Title or Author" aria-label="Search">#}
+{#                                <button class="btn btn-sm btn-outline-secondary " type="submit">Search by Title or Author</button>#}
+{#                            </form>#}
+{#                                </div>#}
+{#                        </li>#}
 
-                    <div class="d-flex ms-auto">
-                        <li class="d-flex nav-item">
-                            <form class="d-flex nav-item">
-                                <input class="form-control me-2" type="search" placeholder="Quick Search" aria-label="Search">
-                                <button class="btn btn-sm btn-outline-secondary " type="submit">Search</button>
-                            </form>
-                        </li>
-                    </div>
                 </ul>
             </div>
         </div>
     </nav>
 </div>
 
-<!-- 3rd Nav Bar starts here -->
-
-
-
-
-
-{##}
-{#<!-- 3rd Nav Bar starts here -->#}
-{#<nav class="navbar navbar-expand-lg navbar-light bg-light">#}
-{#  <div class="container-fluid">#}
-{#    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">#}
-{#      <span class="navbar-toggler-icon"></span>#}
-{#    </button>#}
-{#    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">#}
-{#      <a class="navbar-brand" href="#">Buyaabook</a>#}
-{#      <ul class="navbar-nav me-auto mb-2 mb-lg-0">#}
-{#        <li class="nav-item">#}
-{#          <a class="nav-link " aria-current="page" href="{% url 'index' %}">Home</a>#}
-{#        </li>#}
-{#        <li class="nav-item">#}
-{#          <a class="nav-link" href="#">Link1</a>#}
-{#        </li>#}
-{#                  <li class="nav-item">#}
-{#          <a class="nav-link" href="#">Link2</a>#}
-{#        </li>#}
-{#                  <li class="nav-item">#}
-{#          <a class="nav-link" href="#">Link3</a>#}
-{#        </li>#}
-{#        </ul>#}
-{#        <ul class="navbar-nav me-auto">#}
-{#          <li>#}
-{#              <form class="d-flex nav-item me-auto">#}
-{#        <input class="form-control me-2" type="search" placeholder="Quick Search" aria-label="Search">#}
-{#        <button class="btn btn-sm btn-outline-secondary " type="submit">Search</button>#}
-{#      </form>#}
-{#          </li>#}
-{#      </ul>#}
-{#        </div>#}
-{#  </div>#}
-{#  </nav>#}
-{#<!-- 3rd Nav Bar ends here -->#}
-
 
 <!-- Main Part of the Page -->
 
-<div class="container ">
+  <div class="select2-container d-flex justify-content-center" style="margin-top: 0.5%; margin-left: 0%;margin-right: 0%;margin-bottom: 1%; padding: 0% 1% ">
+<div class="container-fluid mx-auto" style="margin-top: 0.5%; margin-left: 2%;margin-right: 2%;margin-bottom: 1%; padding: 0% 1% ">
 
-<div class="p-3 mb-2 bg-light text-dark">.bg-info
+<div class="p-4 mb-4 bg-light rounded-3 text-dark ">
 {% block page_content %}
     {% endblock %}
 </div>
 </div>
+  </div>
 <!-- End of Main part of the page -->
 
 
 
 
 <!-- Page Footer -->
-<footer class="fixed-bottom card-footer  ">
-    <div mx-auto>@2022 Parpora </div>
+<footer class="fixed-bottom card-footer ms-auto ">
+    <div class="ms-auto">@ Parpora 2022 </div>
 </footer>
 <!-- End Page Footer -->
 

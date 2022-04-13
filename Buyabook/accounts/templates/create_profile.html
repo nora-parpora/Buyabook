@@ -5,8 +5,8 @@
     <form method="POST"  style='border-top: 1px solid grey; border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
 
         <div class='row' style= 'padding-top: 1%'>
-            <div class="col-lg-1"></div>
-            <div class="col-lg-2">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-3">
                 {% csrf_token %}
                 {{ form }}
                 <button class="btn btn-primary mt-2" type="submit">Create</button>

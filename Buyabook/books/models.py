@@ -33,7 +33,8 @@ class Book(models.Model):
                               blank=True)
     image = models.ImageField(upload_to='images/',
                               null=True,
-                              blank=True,)
+                              blank=True,
+                              )
 
 
     pages = models.PositiveIntegerField(

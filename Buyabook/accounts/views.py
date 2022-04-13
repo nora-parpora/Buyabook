@@ -12,26 +12,26 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView, DeleteView, ListView
 
 from Buyabook.accounts.forms import CreateProfileForm, UpdateProfileForm, DeleteProfileForm
-from Buyabook.accounts.helpers import AuthCheckView
+from Buyabook.accounts.helpers import AuthCheckView, CurrentUserView, get_bab_obj
 from Buyabook.accounts.models import Profile, BaBUser
 from Buyabook.books.models import Book
-
 
 
 class UserRegisterView(CreateView):
     form_class = CreateProfileForm
     template_name = 'create_profile.html'
-    #messages.success(request, f'Successfully created an account!')
-    success_url = reverse_lazy('login')
+    #  messages.success(request, f'Successfully created an account!')
+    success_url = reverse_lazy('index')
 
 
+class HomeView(ListView):  # Showing the landing page when the user is not logged in.
+    template_name = 'catalogue.html'
+    queryset = Book.objects.all()
+    context_object_name = 'books'
 
-class HomeView(TemplateView):  # Showing the landing page when the user is not logged in.
-    template_name = 'home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['all_books'] = Book.objects.all()
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['books'] = Book.objects.all()
 
 
 # class IndexView(TemplateView, AuthCheckView):
@@ -45,25 +45,21 @@ class HomeView(TemplateView):  # Showing the landing page when the user is not l
     #     return context
 
 
-class DashboardView(ListView, AuthCheckView):
+class DashboardView(ListView, CurrentUserView, AuthCheckView):
     queryset = Book.objects.all()
     template_name = 'catalogue.html'
 
-    def personal_books(self, obj):
-        books = Book.objects.all().filter(owner_id=self.request.user.pk)
-        return books
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profile = get_object_or_404(Profile, pk=self.request.user.id)
-        context['profile'] = profile
-        context['books'] = Book.objects.filter(owner_id=profile.user.id)
+        # profile = get_object_or_404(Profile, pk=self.request.user.id)
+        # context['profile'] = profile
+        context['books'] = Book.objects.filter(owner_id=self.request.user.id)
         context['all_books'] = Book.objects.all()
-
-
-        #books = Book.objects.filter(profile__owner_id=self.request.user.pk)
-        #     #'is_owner': self.object.user_id == self.request.user.id,
         return context
+
+        #  books = Book.objects.filter(profile__owner_id=self.request.user.pk)
+        #     #'is_owner': self.object.user_id == self.request.user.id,
+
 
 
 class UserLoginView(auth_views.LoginView):
@@ -83,7 +79,7 @@ class UpdateProfileView(UpdateView):
     success_url = reverse_lazy('index')
 
     def get_object(self, queryset=None):
-        return get_object_or_404(Profile, pk=self.request.user.id)
+        return get_bab_obj(Profile, pk=self.request.user.id)
 
 
 class ChangeUserPasswordView(auth_views.PasswordChangeView):
@@ -118,11 +114,11 @@ class DeleteProfileView(DeleteView):
     success_url = reverse_lazy('index')
 
     def get_object(self, queryset=None):
-        return get_object_or_404(BaBUser, pk=self.request.user.id)
+        return get_bab_obj(BaBUser, pk=self.request.user.id)
 
 
 class UnauthView(TemplateView):
-    template_name = '404.html'
+    template_name = '401.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

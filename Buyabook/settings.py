@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'Buyabook.accounts',
     'Buyabook.books',
 
+
+    'django_cleanup.apps.CleanupConfig',
+
 ]
 
 

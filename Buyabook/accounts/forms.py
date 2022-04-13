@@ -89,6 +89,10 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
 
 
 class UpdateProfileForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'phone', 'email', 'city', 'address')

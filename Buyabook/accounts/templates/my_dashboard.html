@@ -1,47 +1,47 @@
 {%  extends 'base.html' %}
 {% block page_content %}
 
-<div class="row">
-    {% for book in books %}
+    <div class="row">
+        {% for book in books %}
 
-        <div class="card mb-3" style="max-width: 350px; border: 1px solid grey;  margin: 10px; ; padding: 1% 1% ">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    {% if book.image %}
-                        <img src="media/{{ book.image }}"  class="img-fluid rounded-start"  alt="...">
-                    {% else %}
-                        <img src="/static/images/book.png"  class="img-fluid rounded-start"  alt="...">
-                    {% endif %}
-                {{ book.owner_id }}
+            <div class="card mb-3" style="max-width: 350px; border: 1px solid grey;  margin: 10px; ; padding: 1% 1% ">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        {% if book.image %}
+                            <img src="media/{{ book.image }}"  class="img-fluid rounded-start"  alt="...">
+                        {% else %}
+                            <img src="/static/images/book.png"  class="img-fluid rounded-start"  alt="...">
+                        {% endif %}
+                        {{ book.owner_id }}
 
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><p5 class="card-title">Name: </p5><b> {{ book.title }}</b></li>
-                            <li class="list-group-item">Category: {{ book.category }}</li>
-                            <li class="list-group-item">Author: {{ book.author }}</li>
-                            <li class="list-group-item">Pages: {{ book.pages }}</li>
-
-                            {% if book.description %}
-                                <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description}}</small></li>
-                            {% endif %}
-                            <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>
-                        </ul>
-
-
+                    </div>
+                    <div class="col-md-8">
                         <div class="card-body">
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><p5 class="card-title">Name: </p5><b> {{ book.title }}</b></li>
+                                <li class="list-group-item">Category: {{ book.category }}</li>
+                                <li class="list-group-item">Author: {{ book.author }}</li>
+                                <li class="list-group-item">Pages: {{ book.pages }}</li>
+
+                                {% if book.description %}
+                                    <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description}}</small></li>
+                                {% endif %}
+                                <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>
+                            </ul>
+
+
+                            <div class="card-body">
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
-    {% endfor %}
+        {% endfor %}
 
-</div>
+    </div>
 {% endblock %}

@@ -36,3 +36,28 @@ class AddBookForm(forms.ModelForm,BootstrapFormMixin):
             ),
         }
 
+
+class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):  #  Additional Library: /
+    # django-cleanup==6.0.0 which is added to the INSTALLED_APPS/
+    # is handling the deletion from the DB
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Book
+        exclude = ('owner',) #  ToDo Show widget value for image to display current picture {{ widget.value.url }}
+
+        widgets = {
+            'description': forms.Textarea(
+                attrs={
+                    'rows': 1
+                }),
+            'image': forms.FileInput(
+                # attrs={
+                #     'placeholder': {{ widget.value.url }} ,
+                # }
+            ),
+        }
+
+
