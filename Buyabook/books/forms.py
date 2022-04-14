@@ -18,7 +18,6 @@ class AddBookForm(forms.ModelForm,BootstrapFormMixin):
         profile = get_object_or_404(Profile, pk=self.user.id)
         book.owner = profile
 
-
         if commit:
             book.save()
 
@@ -26,7 +25,7 @@ class AddBookForm(forms.ModelForm,BootstrapFormMixin):
 
     class Meta:
         model = Book
-        fields = ('title', 'author', 'description', 'category', 'pages', 'image')
+        fields = ('title', 'author', 'description', 'category', 'pages', 'price', 'image')
 
         widgets = {
             'description': forms.Textarea(
@@ -37,12 +36,14 @@ class AddBookForm(forms.ModelForm,BootstrapFormMixin):
         }
 
 
-class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):  #  Additional Library: /
-    # django-cleanup==6.0.0 which is added to the INSTALLED_APPS/
-    # is handling the deletion from the DB
+class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+    """ Additional Library: /
+    django-cleanup==6.0.0 which is added to the INSTALLED_APPS/
+    is handling the deletion from the DB """
 
     class Meta:
         model = Book
@@ -57,7 +58,9 @@ class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):  #  Additional Librar
                 # attrs={
                 #     'placeholder': {{ widget.value.url }} ,
                 # }
+
             ),
+                # 'price': forms.DecimalField(max_digits=5, decimal_places=2),
         }
 
 

@@ -28,6 +28,7 @@
                         <li class="list-group-item">Category: {{ book.category }}</li>
                         <li class="list-group-item">Author: {{ book.author }}</li>
                         <li class="list-group-item">Pages: {{ book.pages }}</li>
+                        <li class="list-group-item">Price:  {{ book.price|floatformat:2 }} € </li>
 
                         {% if book.description %}
                             <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description|truncatechars:30}}</small></li>
@@ -42,7 +43,7 @@
                                 {% if user.is_authenticated and book.owner == current_user %}
 
                                     <a href="{% url 'update book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Edit</a>
-                                    <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Delete</a>
+                                    <a href="{% url 'delete book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Delete</a>
                                     {% elif user.is_authenticated and not book.owner == current_user %}
                                     <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Details</a>
                                     <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Buy Book</a>

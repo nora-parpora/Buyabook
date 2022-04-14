@@ -3,6 +3,7 @@ from PIL import Image
 from Buyabook.accounts.models import Profile
 
 
+
 class Category(models.Model):
     name = models.CharField(
         max_length=100,
@@ -27,8 +28,9 @@ class Book(models.Model):
                                  on_delete=models.SET_NULL,
                                  null=True,
                                  blank=True)
+    price = models.FloatField()
     owner = models.ForeignKey(Profile,
-                              on_delete=models.SET_NULL,
+                              on_delete=models.CASCADE,
                               null=True,
                               blank=True)
     image = models.ImageField(upload_to='images/',
@@ -43,13 +45,13 @@ class Book(models.Model):
 
     def save(self, **kwargs):
         super().save()
+        if self.image:
+            img = Image.open(self.image.path)
+            if img.height > 300 or img.width > 300:
 
-        img = Image.open(self.image.path)
-        if img.height > 300 or img.width > 300:
-
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
 
 
     def __str__(self):

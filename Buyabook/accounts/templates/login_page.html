@@ -1,25 +1,38 @@
 {%  extends 'base.html' %}
 {% block page_content %}
 
-    <br>
-    <h3 class="text-center">Login to Your Profile</h3>
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
+    <div class = 'form-control '>
+        <h3 class="text-center">Login to Your Profile</h3>
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
 
-            <!-- Login Form -->
-            <form method="POST" style='border-top: 1px solid grey; border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button class="btn btn-secondary btn-sm" type="submit">Log in</button>
-            </form>
-            <!-- End Login Form -->
+                <!-- Login Form -->
+                <form method="POST" style='border-top: 1px solid grey; border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <button class="btn btn-secondary btn-sm" type="submit">Log in</button>
+                </form>
+                <!-- End Login Form -->
+
+            </div>
+            <div class="col-lg-3" ></div>
+        </div>
+
+        <div class="select2-container justify-content-center">
+
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+
+                    <h6 class="text-muted" >
+                        You don't have an account? <a href="{% url 'register' %}" > <strong> Register here </strong></a>
+                    </h6>
+                </div>
+            </div>
 
         </div>
-        <div class="col-lg-3" ></div>
     </div>
-    <h5 class="text-muted" >
-        You don't have an account? <a href="{% url 'register' %}" > <strong> Register here </strong></a>
-    </h5>
 
 {% endblock %}

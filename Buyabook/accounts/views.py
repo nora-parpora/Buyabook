@@ -1,8 +1,7 @@
-
-
 from django.contrib import messages
 from django.contrib.auth import views as auth_views, logout
-from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.http import request, HttpRequest
 
@@ -10,8 +9,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView, DeleteView, ListView
+from django.views.generic.edit import FormMixin
 
-from Buyabook.accounts.forms import CreateProfileForm, UpdateProfileForm, DeleteProfileForm
+from Buyabook.accounts.forms import CreateProfileForm, UpdateProfileForm, DeleteProfileForm, BaBPasswordChangeForm
 from Buyabook.accounts.helpers import AuthCheckView, CurrentUserView, get_bab_obj
 from Buyabook.accounts.models import Profile, BaBUser
 from Buyabook.books.models import Book
@@ -21,7 +21,7 @@ class UserRegisterView(CreateView):
     form_class = CreateProfileForm
     template_name = 'create_profile.html'
     #  messages.success(request, f'Successfully created an account!')
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('login')
 
 
 class HomeView(ListView):  # Showing the landing page when the user is not logged in.
@@ -61,7 +61,6 @@ class DashboardView(ListView, CurrentUserView, AuthCheckView):
         #     #'is_owner': self.object.user_id == self.request.user.id,
 
 
-
 class UserLoginView(auth_views.LoginView):
     template_name = 'login_page.html'
     success_url = reverse_lazy('index')
@@ -84,37 +83,50 @@ class UpdateProfileView(UpdateView):
 
 class ChangeUserPasswordView(auth_views.PasswordChangeView):
     template_name = 'change_password.html'
-    form_class = PasswordChangeForm
+    form_class = BaBPasswordChangeForm
+    # form_class = SetPasswordForm
     success_url = reverse_lazy('update profile')
+    def get_object(self, queryset=None):
+        return get_bab_obj(Profile, pk=self.request.user.id)
 
 
-class ProfileDetailsView(DetailView):
+class ProfileDetailsView(DetailView, UserLoginView):
     model = Profile
     template_name = 'profile_details.html'
     context_object_name = 'profile'
 
     def get_object(self, queryset=None):
-        profile = get_object_or_404(Profile, pk=self.request.user.id)
+        profile = get_bab_obj(Profile, pk=self.request.user.id)
         return profile
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        profile = get_object_or_404(Profile, pk=self.request.user.id)
-
-    #     context.update({
-    #         'is_owner': self.object.user_id == self.request.user.id,
-    #     })
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['profile'] = get_bab_obj(Profile, pk=self.request.user.id)
+    #     return context
 
 
 class DeleteProfileView(DeleteView):
     model = BaBUser
-    #form_class = DeleteProfileForm
-    template_name = 'delete_profile.html'
+    #  form_class = DeleteProfileForm
+    template_name = 'delete_book.html'
     success_url = reverse_lazy('index')
 
     def get_object(self, queryset=None):
-        return get_bab_obj(BaBUser, pk=self.request.user.id)
+        instance = get_bab_obj(BaBUser, pk=self.request.user.id)
+        return instance
+
+
+
+class RequestDeleteView( DeleteView):
+    """
+    Sub-class the DeleteView to restrict a User from deleting other
+    user's data.
+    """
+    success_message = "Deleted Successfully"
+
+    def get_queryset(self):
+        qs = super(RequestDeleteView, self).get_queryset()
+        return qs.filter(owner=self.request.user)
 
 
 class UnauthView(TemplateView):

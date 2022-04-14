@@ -1,19 +1,21 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 
 from Buyabook.accounts.helpers import get_bab_obj, CurrentUserView
-from Buyabook.accounts.models import Profile
+
 from Buyabook.books.forms import AddBookForm, UpdateBookForm
 from Buyabook.books.models import Book
 
 
-class AddBookView(CreateView):
+class AddBookView(CreateView,SuccessMessageMixin):
     template_name = 'add_book.html'
     form_class = AddBookForm
     success_url = reverse_lazy('index')
+    success_message = "Created Successfully"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -35,7 +37,7 @@ class CatalogueView(ListView, CurrentUserView):
 
             if query.isdigit():
                 qs |= Q(pk=query)
-            object_list = Book.objects.filter(qs)
+            object_list = Book.objects.filter(qs).order_by("title")
             if len(object_list) == 0:
                 return
 
@@ -58,29 +60,28 @@ class BookDetailsView(DetailView, CurrentUserView):
     template_name = 'book_details.html'
 
 
-class ProfileDetailsView(DetailView):
-    model = Profile
-    template_name = 'profile_details.html'
-    context_object_name = 'book'
-
-    def get_object(self, queryset=None):
-        profile = get_object_or_404(Profile, pk=self.request.user.id)
-        return profile
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-    #    profile = get_object_or_404(Profile, pk=self.request.user.id)
-    #     context.update({
-    #         'is_owner': self.object.user_id == self.request.user.id,
-    #     })
-        return context
-
-
-class UpdateBookView(UpdateView): #  Additional Library: django-cleanup==6.0.0 which is added to the INSTALLED_APPS/
-    # is handling the deletion from the DB
+class UpdateBookView(UpdateView,CurrentUserView):
+    """  Additional Library: django-cleanup==6.0.0 which is added to the INSTALLED_APPS/
+    is handling the deletion from the DB """
     model = Book
     form_class = UpdateBookForm
     template_name = 'update_book.html'
     success_url = reverse_lazy('index')
+
+
+class DeleteBookView(DeleteView,CurrentUserView):
+    model = Book
+    #  form_class = DeleteProfileForm
+    template_name = 'delete_book.html'
+    success_url = reverse_lazy('index')
+
+    # def get_object(self, queryset=None):
+    #     instance = get_bab_obj(Book, pk=self.request.book.pk)
+    #     return instance
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['book'] = get_bab_obj(Book, pk=self.request.user.id)
+    #     return context
 
 

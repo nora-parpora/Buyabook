@@ -4,10 +4,11 @@
 
     <div class="container">
         <div class="form-group" style=' margin: 1%;  padding: 0% 0% '>
-            <form method="get" action="{% url 'catalogue' %}" class="d-flex form-control me-2" style=' margin: 1%;  padding: 0% 0%'>
+
+            <form method="get" action="{% url 'catalogue' %}" class="d-flex form-control me-6" style=' margin: 1%;  padding: 0% 0%'>
                 {#            <p> Search by Title, Author or Book ID</p>#}
-                <input name="q" class="form-control me-2" style=' margin: 1%;  padding: 1% 1% ' type="search" placeholder="Search by Book ID" aria-label="Search">
-                <button class="btn btn-outline-secondary" style='margin: 1% ' type="submit">Search by Title, Author or Book ID</button>
+                <input name="q" class="form-control me-8" style=' margin: 1%;  padding: 1% 1% ' type="search" placeholder="Search by Title, Author or Book ID" aria-label="Search">
+                <button class="btn btn-outline-secondary" style='margin: 1% ' type="submit">  Search  </button>
             </form>
         </div>
         {#            <div class="form-group" style=' margin: 1%;  padding: 0% 0% '>#}
@@ -42,6 +43,7 @@
                                     <li class="list-group-item">Category: {{ book.category }}</li>
                                     <li class="list-group-item">Author: {{ book.author }}</li>
                                     <li class="list-group-item">Pages: {{ book.pages }}</li>
+                                    <li class="list-group-item">Price: {{ book.price|floatformat:2 }} € </li>
 
                                     {% if book.description %}
                                         <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description}}</small></li>
@@ -51,12 +53,12 @@
                             </div>
 
                             <div class="btn-group d-flex justify-content-center" role="group" aria-label="Third group">
-                                {% if not book.owner == current_user %}
+                                {% if not book.owner == current_user and user.is_authenticated %}
                                     <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Buy Book</a>
                                 {% else %}
-                                    {% if user.is_authenticated %}
+                                    {% if book.owner == current_user and user.is_authenticated %}
                                         <a href="{% url 'update book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Edit</a>
-                                        <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Delete</a>
+                                        <a href="{% url 'delete book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Delete</a>
                                     {% endif %}
                                 {% endif %}
 

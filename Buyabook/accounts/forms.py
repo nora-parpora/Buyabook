@@ -1,10 +1,11 @@
 from django import forms
-from django.contrib.auth import forms as auth_forms, get_user_model
-from django.forms import ModelForm
+from django.contrib.auth import forms as auth_forms, get_user_model, password_validation
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.views import PasswordChangeView
 
-
-from Buyabook.accounts.helpers import BootstrapFormMixin, DisabledFieldsFormMixin
+from Buyabook.accounts.helpers import BootstrapFormMixin, DisabledFieldsFormMixin, get_bab_obj
 from Buyabook.accounts.models import Profile
+from Buyabook.books.models import Book
 
 
 class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
@@ -110,13 +111,53 @@ class DeleteProfileForm(BootstrapFormMixin, DisabledFieldsFormMixin, forms.Model
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
-        self._init_disabled_fields()
+        #self._init_disabled_fields()
 
     def save(self, commit=True):
         #  TO_DO: Delete all associated books
+        Book.objects.filter(owner=self.instance).delete()
         self.instance.delete()
         return self.instance
 
+    # class Meta:
+    #     model = Profile
+    #     fields = ('first_name', 'last_name', 'phone', 'email', 'city', 'address')
+
+# ChangeUserPasswordView
+class BaBPasswordChangeForm(forms.Form):
+    error_messages = {
+        "password_mismatch": "The two password fields didn’t match.",
+    }
+
+    # username = forms.CharField(
+    #     label="Username",
+    #
+    # )
+    new_password1 = forms.CharField(
+        label="New password",
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        strip=False,
+        help_text=None,
+    )
+    new_password2 = forms.CharField(
+        label="New password confirmation",
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+    )
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+        #self.fields['username'].disabled = True
+
+    def save(self, commit=True):
+        password = self.cleaned_data["new_password1"]
+        self.user.set_password(password)
+        if commit:
+            self.user.save()
+        return self.user
+
+
     class Meta:
-        model = Profile
-        fields = ('first_name', 'last_name', 'phone', 'email', 'city', 'address')
+        model = get_user_model()
+

@@ -9,30 +9,50 @@
         <div class="container-md ">
             <div class="d-flex justify-content-center" style=' margin: 1% 2%; padding: 2% 2% '>
                 <div class = 'form-control '>
+
                     <div class="d-flex justify-content-center" style=' margin: 1% 2%; padding: 2% 2% '>
 
-                        <form method="POST" class="d-flex justify-content-center" style='border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
+                        <form method="POST" class="form-control d-flex justify-content-center" style=' margin: 1% 2%; padding: 2% 2% '>
                             <div class='row' style= 'padding-top: 1%'>
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-8">
+                                    <div class = "select2-container form-control">
+                                        {% csrf_token %}
+                                        {{ form }}
 
-                                    {% csrf_token %}
-                                    {{ form }}
+                                        <div class="d-flex justify-content-center" style=' border-top: 0px solid grey; margin: 6% 6%; padding: 2% 2% '>
+                                            <button class="btn btn-secondary btn-md" type="submit" >Update Profile</button>
 
-                                    <button class="btn btn-secondary btn-md" type="submit">Update Profile</button>
-                                    <div class="col-lg-1"></div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
+
                         </form>
+
+                    </div>
+                    <div class="container" style=' margin: 1% 2%; padding: 2% 2% '>
+                    <div class="d-flex justify-content-center">
+
+                            <h6>You want to change your <b>password</b>? Please click <a href="{% url 'update password' %}"><strong>here</strong></a>.</h6>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+
+
         </div>
     </div>
 
-    <div class="container" style=' border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
-        <h5>You want to change your password? Please click <a href="{% url 'update password' %}"><strong>here</strong></a>.</h5>
     </div>
+
+    </div>
+
+
+
 
 
 {% endblock %}
