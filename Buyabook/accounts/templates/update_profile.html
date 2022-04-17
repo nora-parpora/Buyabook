@@ -1,6 +1,6 @@
 {%  extends 'base.html' %}
 {% block page_content %}
-    {% load crispy_forms_tags %}
+
 
 
     <div class="container">
@@ -12,11 +12,11 @@
 
                     <div class="d-flex justify-content-center" style=' margin: 1% 2%; padding: 2% 2% '>
 
-                        <form method="POST" class="form-control d-flex justify-content-center" style=' margin: 1% 2%; padding: 2% 2% '>
+                        <form method="POST"   style=' margin: 1% 2%; padding: 2% 2% '>
                             <div class='row' style= 'padding-top: 1%'>
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-8">
-                                    <div class = "select2-container form-control">
+                                    <div class = "select2-container ">
                                         {% csrf_token %}
                                         {{ form }}
 
@@ -27,11 +27,12 @@
 
                                     </div>
                                 </div>
-                            </div>
+
+
 
                         </form>
 
-                    </div>
+
                     <div class="container" style=' margin: 1% 2%; padding: 2% 2% '>
                     <div class="d-flex justify-content-center">
 

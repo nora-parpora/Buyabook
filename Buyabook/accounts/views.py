@@ -53,12 +53,12 @@ class DashboardView(ListView, CurrentUserView, AuthCheckView):
         context = super().get_context_data(**kwargs)
         # profile = get_object_or_404(Profile, pk=self.request.user.id)
         # context['profile'] = profile
-        context['books'] = Book.objects.filter(owner_id=self.request.user.id)
+        context['books'] = Book.objects.filter(seller_id=self.request.user.id)
         context['all_books'] = Book.objects.all()
         return context
 
-        #  books = Book.objects.filter(profile__owner_id=self.request.user.pk)
-        #     #'is_owner': self.object.user_id == self.request.user.id,
+        #  books = Book.objects.filter(profile__seller_id=self.request.user.pk)
+        #     #'is_seller': self.object.user_id == self.request.user.id,
 
 
 class UserLoginView(auth_views.LoginView):
@@ -116,7 +116,6 @@ class DeleteProfileView(DeleteView):
         return instance
 
 
-
 class RequestDeleteView( DeleteView):
     """
     Sub-class the DeleteView to restrict a User from deleting other
@@ -126,7 +125,7 @@ class RequestDeleteView( DeleteView):
 
     def get_queryset(self):
         qs = super(RequestDeleteView, self).get_queryset()
-        return qs.filter(owner=self.request.user)
+        return qs.filter(seller=self.request.user)
 
 
 class UnauthView(TemplateView):
@@ -146,14 +145,16 @@ def logged_in_switch_view(logged_in_view, logged_out_view):
     return inner_view
 
 
+class PageNotFoundView(TemplateView):
+    template_name = '404.html'
 
-    # def get_context_data(self, **kwargs):
+
+#  def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     profile = get_object_or_404(Profile, pk=self.request.user.id)
     #     #user = get_object_or_404(User, pk=self.request.user.id)
     #     context['form'] = self.form_class(instance=profile)
     #     return context
-
 
 
 # class DeleteProfileView(DeleteView):
@@ -173,9 +174,6 @@ def logged_in_switch_view(logged_in_view, logged_out_view):
 #     #     return context
 
 
-
-
-
 # class UpdateProfileView(UpdateView):
 #     model = Profile
 #     form_class = UpdateProfileForm
@@ -192,8 +190,8 @@ def logged_in_switch_view(logged_in_view, logged_out_view):
 #         context['form'] = form
 #         a=5
 
-        # form = self.form_class(instance=user)
-        # context['form'] = self.form_class(instance=user)
+#  form = self.form_class(instance=user)
+#  context['form'] = self.form_class(instance=user)
 
 
 # class UpdateProfileView(UpdateView):
@@ -219,7 +217,7 @@ def logged_in_switch_view(logged_in_view, logged_out_view):
     #     context.update({
     #         'total_likes_count': total_likes_count,
     #         'total_pet_photos_count': total_pet_photos_count,
-    #         'is_owner': self.object.user_id == self.request.user.id,
+    #         'is_seller': self.object.user_id == self.request.user.id,
     #         'pets': pets,
     #     })
     #     return context

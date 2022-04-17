@@ -16,7 +16,7 @@ class AddBookForm(forms.ModelForm,BootstrapFormMixin):
         book = super().save(commit=False)
 
         profile = get_object_or_404(Profile, pk=self.user.id)
-        book.owner = profile
+        book.seller = profile
 
         if commit:
             book.save()
@@ -47,7 +47,7 @@ class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Book
-        exclude = ('owner',) #  ToDo Show widget value for image to display current picture {{ widget.value.url }}
+        exclude = ('seller',) #  ToDo Show widget value for image to display current picture {{ widget.value.url }}
 
         widgets = {
             'description': forms.Textarea(

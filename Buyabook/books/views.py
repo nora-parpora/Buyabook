@@ -11,11 +11,11 @@ from Buyabook.books.forms import AddBookForm, UpdateBookForm
 from Buyabook.books.models import Book
 
 
-class AddBookView(CreateView,SuccessMessageMixin):
+class AddBookView(CreateView):
     template_name = 'add_book.html'
     form_class = AddBookForm
     success_url = reverse_lazy('index')
-    success_message = "Created Successfully"
+
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -40,7 +40,6 @@ class CatalogueView(ListView, CurrentUserView):
             object_list = Book.objects.filter(qs).order_by("title")
             if len(object_list) == 0:
                 return
-
         else:
             object_list = Book.objects.all()
         return object_list

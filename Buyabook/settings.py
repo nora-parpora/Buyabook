@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'Buyabook.accounts',
     'Buyabook.books',
+    'Buyabook.cart',
 
 
     'django_cleanup.apps.CleanupConfig', #  used to delete the images from the database when the book is updated with a new image

@@ -14,7 +14,7 @@
 
                                     {% csrf_token %}
                                     {{ form.as_p }}
-{% if book.owner == current_user and user.is_authenticated %}
+{% if book.seller == current_user and user.is_authenticated %}
                                     <button class="btn btn-secondary btn-danger" type="submit">Delete Book</button>
                                 </div>
 

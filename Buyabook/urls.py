@@ -24,5 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('Buyabook.accounts.urls')),
     path('', include('Buyabook.books.urls')),
+    path('cart/', include('Buyabook.cart.urls')),
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

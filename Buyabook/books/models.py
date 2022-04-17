@@ -1,7 +1,7 @@
 from django.db import models
 from PIL import Image
 from Buyabook.accounts.models import Profile
-
+from Buyabook.cart.models import Cart
 
 
 class Category(models.Model):
@@ -29,7 +29,7 @@ class Book(models.Model):
                                  null=True,
                                  blank=True)
     price = models.FloatField()
-    owner = models.ForeignKey(Profile,
+    seller = models.ForeignKey(Profile,
                               on_delete=models.CASCADE,
                               null=True,
                               blank=True)
@@ -37,11 +37,17 @@ class Book(models.Model):
                               null=True,
                               blank=True,
                               )
-
+    cart = models.ForeignKey(Cart,
+                             on_delete=models.SET_NULL,
+                             null=True,
+                             blank=True)
 
     pages = models.PositiveIntegerField(
         blank=True,
         null=True,)
+
+    def is_available(self):
+        return self.cart == None
 
     def save(self, **kwargs):
         super().save()

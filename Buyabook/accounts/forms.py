@@ -6,6 +6,7 @@ from django.contrib.auth.views import PasswordChangeView
 from Buyabook.accounts.helpers import BootstrapFormMixin, DisabledFieldsFormMixin, get_bab_obj
 from Buyabook.accounts.models import Profile
 from Buyabook.books.models import Book
+from Buyabook.cart.models import Cart
 
 
 class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
@@ -63,6 +64,7 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=commit)
+
         profile = Profile(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
@@ -71,10 +73,13 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
             address=self.cleaned_data['address'],
             phone=self.cleaned_data['phone'],
             user=user,
+
         )
+        cart = Cart(user=user)
 
         if commit:
             profile.save()
+            cart.save()
         return user
 
     class Meta:
@@ -114,8 +119,8 @@ class DeleteProfileForm(BootstrapFormMixin, DisabledFieldsFormMixin, forms.Model
         #self._init_disabled_fields()
 
     def save(self, commit=True):
-        #  TO_DO: Delete all associated books
-        Book.objects.filter(owner=self.instance).delete()
+
+        Book.objects.filter(seller=self.instance).delete()
         self.instance.delete()
         return self.instance
 

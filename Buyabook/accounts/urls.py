@@ -4,7 +4,7 @@ from django.urls import path, reverse_lazy
 from django.views.generic import RedirectView
 
 from Buyabook.accounts.views import UserRegisterView, UserLoginView, UnauthView, \
-    UpdateProfileView, ChangeUserPasswordView, ProfileDetailsView, DeleteProfileView, DashboardView
+    UpdateProfileView, ChangeUserPasswordView, ProfileDetailsView, DeleteProfileView, DashboardView, PageNotFoundView
 
 urlpatterns = [
     #path('', IndexView.as_view(), name='index'),
@@ -18,6 +18,7 @@ urlpatterns = [
     #path('dashboard/', DashboardView.as_view(), name='dashboard'),
     #path('home/', DashboardView.as_view(), name='home'),
 
-    path('404/', UnauthView.as_view(), name='404'),
+    path('401/', UnauthView.as_view(), name='401'),
+    path('404/', PageNotFoundView.as_view(), name='404'),
 
 ]
