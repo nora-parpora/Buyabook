@@ -108,7 +108,7 @@ class ProfileDetailsView(DetailView, UserLoginView):
 class DeleteProfileView(DeleteView):
     model = BaBUser
     #  form_class = DeleteProfileForm
-    template_name = 'delete_book.html'
+    template_name = 'delete_profile.html'
     success_url = reverse_lazy('index')
 
     def get_object(self, queryset=None):

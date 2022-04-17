@@ -38,14 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'crispy_forms',
-    'crispy_bootstrap5',
+    # 'crispy_forms',
+    # 'crispy_bootstrap5',
 
     'Buyabook.accounts',
     'Buyabook.books',
 
 
-    'django_cleanup.apps.CleanupConfig',
+    'django_cleanup.apps.CleanupConfig', #  used to delete the images from the database when the book is updated with a new image
 
 ]
 
