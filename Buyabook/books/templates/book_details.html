@@ -6,9 +6,9 @@
 
     <div class="select2-container d-flex justify-content-center">
 
-    <div class="card mb-6" style="max-width: 450px;max-height: 500px; border: 1px solid grey;  margin: 40px; ; padding: 2% 2% ">
+    <div class="card mb-8 p-4" >
         <h6 class="text-center">Details for <b>{{ book.title }}</b></h6>
-        <div class="row g-0">
+        <div class="row g-4">
             <div class="col-md-4"  >
                 {% if book.image %}
                     <img src="{{ book.image.url}}"  class="img-fluid rounded-start"  alt="{{book.image}}">
@@ -31,7 +31,7 @@
                         <li class="list-group-item">Price:  {{ book.price|floatformat:2 }} € </li>
 
                         {% if book.description %}
-                            <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description|truncatechars:30}}</small></li>
+                            <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description|truncatechars:80}}</small></li>
                         {% endif %}
                         <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>
                     </ul>
