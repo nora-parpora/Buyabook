@@ -1,11 +1,11 @@
-from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from Buyabook.accounts.helpers import get_bab_obj, CurrentUserView
+from django.db.models import Q
+from django.shortcuts import redirect
+
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+
+from Buyabook.accounts.helpers import CurrentUserView
 
 from Buyabook.books.forms import AddBookForm, UpdateBookForm
 from Buyabook.books.models import Book
@@ -15,7 +15,6 @@ class AddBookView(CreateView):
     template_name = 'add_book.html'
     form_class = AddBookForm
     success_url = reverse_lazy('index')
-
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -67,6 +66,11 @@ class UpdateBookView(UpdateView,CurrentUserView):
     template_name = 'update_book.html'
     success_url = reverse_lazy('index')
 
+    def dispatch(self, request, *args, **kwargs):
+        if not self.get_object().is_available():
+            return redirect('404')
+        return super().dispatch(request, *args, **kwargs)
+
 
 class DeleteBookView(DeleteView,CurrentUserView):
     model = Book
@@ -84,3 +88,23 @@ class DeleteBookView(DeleteView,CurrentUserView):
     #     return context
 
 
+class AvailableBooksView(ListView):
+    model = Book
+    template_name = 'available_books.html'
+    context_object_name = 'books'
+
+    def get_queryset(self):
+        object_list = None
+        query = self.request.GET.get('q')
+
+        if query:
+            qs = Q(title__icontains=query) | Q(author__icontains=query) | Q(description__icontains=query)
+            if query.isdigit():
+                qs |= Q(pk=query)
+        else:
+            qs = Q(cart_id=None) & ~Q(seller_id=self.request.user.id)
+
+        object_list = Book.objects.filter(qs).order_by("title")
+        if len(object_list) == 0:
+            return
+        return object_list

@@ -84,7 +84,6 @@ class UpdateProfileView(UpdateView):
 class ChangeUserPasswordView(auth_views.PasswordChangeView):
     template_name = 'change_password.html'
     form_class = BaBPasswordChangeForm
-    # form_class = SetPasswordForm
     success_url = reverse_lazy('update profile')
     def get_object(self, queryset=None):
         return get_bab_obj(Profile, pk=self.request.user.id)

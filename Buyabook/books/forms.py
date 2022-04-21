@@ -47,20 +47,15 @@ class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Book
-        exclude = ('seller',) #  ToDo Show widget value for image to display current picture {{ widget.value.url }}
+        exclude = ('seller', 'cart',) #  ToDo Show widget value for image to display current picture {{ widget.value.url }}
 
         widgets = {
             'description': forms.Textarea(
                 attrs={
                     'rows': 1
                 }),
-            'image': forms.FileInput(
-                # attrs={
-                #     'placeholder': {{ widget.value.url }} ,
-                # }
+            'image': forms.FileInput()
 
-            ),
-                # 'price': forms.DecimalField(max_digits=5, decimal_places=2),
         }
 
 

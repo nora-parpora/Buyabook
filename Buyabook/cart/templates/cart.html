@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+
+
+
+ <div class="row justify-content-center">
+
+        {% if books %}
+
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Book ID</th>
+
+                    <th scope="col">Title</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for book in books %}
+                        <th scope="row">{{book.pk}}</th>
+                        <td><a href="{% url 'book details' book.pk %}">{{ book.title }}</a></td>
+                        <td>{{ book.category }}</td>
+                        <td>{{ book.price|floatformat:2 }} € </td>
+                        <td><a href="{% url 'remove' book.pk %}">Remove</a></td>
+                        </tr>
+                    {% endfor %}
+</tbody>
+                <tr>
+
+                        <th scope="row"></th>
+                    <td ><b><i>Total amount:</i></b></td>
+                        <td></td>
+                        <td>
+                            <b>{{ cart_total|floatformat:2 }} € </b>
+                        </td>
+
+
+                </tr>
+
+
+            </table>
+
+
+
+            <!--This is the card representation of the books that are in the cart -->
+            {#            {% for book in books %}#}
+            {#                <div class="card mb-3 justify-content-center" >#}
+            {#                    <div class="row g-0">#}
+            {#                        <div class="col-md-4">#}
+            {#                            {% if book.image %}#}
+            {##}
+            {#                                <img src="/media/{{ book.image }}"  class="my-4  max-width: 80%; and height: auto; img-thumbnail rounded-start"  alt="...">#}
+            {#                            {% else %}#}
+            {#                                <img src="/static/images/book.png"  class="my-6 max-width: 90%; and height: auto; img-thumbnail rounded-start"  alt="...">#}
+            {#                            {% endif %}#}
+            {#                            <div class="d-flex justify-content-center"><i>Book ID: <b>{{ book.id }}</b></i></div>#}
+            {#                        </div>#}
+            {#                        <div class="col-md-8">#}
+            {#                            <div class="card-body">#}
+            {##}
+            {#                                <ul class="list-group list-group-flush">#}
+            {#                                    <li class="list-group-item card-title">Name: <b> {{ book.title }}</b></li>#}
+            {#                                    <li class="list-group-item">Category: {{ book.category }}</li>#}
+            {#                                    <li class="list-group-item">Author: {{ book.author }}</li>#}
+            {#                                    <li class="list-group-item">Pages: {{ book.pages }}</li>#}
+            {#                                    <li class="list-group-item">Price: {{ book.price|floatformat:2 }} € </li>#}
+            {##}
+            {#                                    {% if book.description %}#}
+            {#                                        <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description}}</small></li>#}
+            {#                                    {% endif %}#}
+            {#                                    <li class= "list-group-item"><small class="text-muted">Status: {{ book.is_available }}</small></li>#}
+            {#                                </ul>#}
+            {#                            </div>#}
+            {##}
+            {#                            <div class="btn-group d-flex justify-content-center" role="group" aria-label="Third group">#}
+            {##}
+            {#                                <a href="{% url 'remove' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Remove</a>#}
+            {##}
+            {#                            </div>#}
+            {#                        </div>#}
+            {#                    </div>#}
+            {#                </div>#}
+            {#            {% endfor %}#}
+            <!--This is the end of the card representation of the books that are in the cart -->
+
+
+        {% else %}
+
+    <h3 class="row justify-content-center">There aren't any books in your cart.</h3>
+
+            <img src="/static/images/no_books_in_cart.jpg"  class="my-6 max-width: 90%; and height: auto; img-thumbnail rounded-start"  alt="...">
+        {% endif %}
+    </div>
+{% endblock %}

@@ -26,6 +26,10 @@ class AuthCheckView(View):
         return super().dispatch(request, *args, **kwargs)
 
 
+class EditDeleteBookPermMixin: # TODO - add the Mixin to catalogueView
+    pass
+
+
 def get_bab_obj(klass, *args, **kwargs):
     try:
         return get_object_or_404(klass,*args, **kwargs)

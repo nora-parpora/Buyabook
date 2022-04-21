@@ -1,6 +1,7 @@
 from django.db import models
 from PIL import Image
 from Buyabook.accounts.models import Profile
+from Buyabook.books.validators import validate_add_to_cart_perm
 from Buyabook.cart.models import Cart
 
 
@@ -40,7 +41,8 @@ class Book(models.Model):
     cart = models.ForeignKey(Cart,
                              on_delete=models.SET_NULL,
                              null=True,
-                             blank=True)
+                             blank=True,
+                             )
 
     pages = models.PositiveIntegerField(
         blank=True,
@@ -49,8 +51,12 @@ class Book(models.Model):
     def is_available(self):
         return self.cart == None
 
+
     def save(self, **kwargs):
         super().save()
+
+        # if validate_add_to_cart_perm(self):
+        #     pass
         if self.image:
             img = Image.open(self.image.path)
             if img.height > 300 or img.width > 300:

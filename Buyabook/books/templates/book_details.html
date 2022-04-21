@@ -33,6 +33,12 @@
                         {% if book.description %}
                             <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description|truncatechars:80}}</small></li>
                         {% endif %}
+                        {% if book.is_available %}
+                            <li class= "list-group-item"><small class="text-muted">Status: is available</small></li>
+                        {% else %}
+                            <li class= "list-group-item"><small class="text-muted">Status: is not currently available</small></li>
+                        {% endif %}
+
                         <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>
                     </ul>
                 <div class="container">

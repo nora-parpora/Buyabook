@@ -53,7 +53,6 @@ class Profile(models.Model):
 
     email = models.EmailField(
         unique=True,
-        #help_text='Please, provide a valid email address',
     )
 
     phone =models.CharField(
@@ -82,7 +81,6 @@ class Profile(models.Model):
         blank=True,
         auto_now_add=True,
     )
-
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

@@ -16,7 +16,6 @@
 </head>
 <body class = "m-5 justify-content-center margin-top:8" >
 <!-- style=" background-image: url('https://images.unsplash.com/photo-1576872381149-7847515ce5d8')"-->
-{#<body  style="background-image: url('{% static "/image/containers.jpg" %}')">#}
 <div class="sticky-sm-top">
 
     <!-- 1st Nav Bar starts here -->
@@ -26,9 +25,8 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" style=" color: dimgray " href="{% url 'catalogue' %}"><b><i>Buyabook </i></b></a>
+            <a class="navbar-brand" style=" color: dimgray " href="{% url 'buyabook' %}"><b><i>Buyabook </i></b></a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-
                 <ul class="navbar-nav ms-auto ">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
@@ -75,9 +73,8 @@
                             <a class="nav-link" href="{% url 'add book' %}">Sell a book</a>
 
                         </li>
-
                                                 <li class="nav-item">
-                            <a class="nav-link" href="{% url 'catalogue' %}">Buy a book</a>
+                            <a class="nav-link" href="{% url 'catalogue' %}">Catalogue</a>
 
                         </li>
                                                 <li class="nav-item">
@@ -173,8 +170,8 @@
 
 
 <!-- Page Footer -->
-<footer class="fixed-bottom card-footer ms-auto ">
-    <div class="ms-auto">@ Parpora 2022 </div>
+<footer class="fixed-bottom card-footer ">
+    <div class="ms-auto text-muted">@ Parpora 2022 </div>
 </footer>
 <!-- End Page Footer -->
 

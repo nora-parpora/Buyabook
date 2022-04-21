@@ -42,13 +42,8 @@
                                     <li class="list-group-item card-title">Name: <b> {{ book.title }}</b></li>
                                     <li class="list-group-item">Category: {{ book.category }}</li>
                                     <li class="list-group-item">Author: {{ book.author }}</li>
-{#                                    <li class="list-group-item">Pages: {{ book.pages }}</li>#}
                                     <li class="list-group-item">Price: {{ book.price|floatformat:2 }} € </li>
 
-{#                                    {% if book.description %}#}
-{#                                        <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description}}</small></li>#}
-{#                                    {% endif %}#}
-{#                                    <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>#}
                                     {% if book.is_available %}
                                 <li class= "list-group-item"><small class="text-muted">Status: is available</small></li>
                                     {% else %}
