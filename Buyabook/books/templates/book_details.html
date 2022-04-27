@@ -2,23 +2,19 @@
 
 {% block page_content %}
 
-
-
     <div class="select2-container d-flex justify-content-center">
 
     <div class="card mb-8 p-4" >
-        <h6 class="text-center">Details for <b>{{ book.title }}</b></h6>
         <div class="row g-4">
             <div class="col-md-4"  >
                 {% if book.image %}
-                    <img src="{{ book.image.url}}"  class="img-fluid rounded-start"  alt="{{book.image}}">
+                    <img src="{{ book.image.url}}"  class="my-4 img-fluid rounded-start"  alt="{{book.image}}">
                 {% else %}
                     <img src="/static/images/book.png"  class="img-fluid rounded-start"  alt="...">
                 {% endif %}
                 <br>
 
                 <div class="d-flex justify-content-center"><i>Book ID: <b>{{ book.id }}</b></i></div>
-
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -29,7 +25,6 @@
                         <li class="list-group-item">Author: {{ book.author }}</li>
                         <li class="list-group-item">Pages: {{ book.pages }}</li>
                         <li class="list-group-item">Price:  {{ book.price|floatformat:2 }} € </li>
-
                         {% if book.description %}
                             <li class="list-group-item"> <small class="text-muted"> Summary: {{ book.description|truncatechars:80}}</small></li>
                         {% endif %}
@@ -39,28 +34,26 @@
                             <li class= "list-group-item"><small class="text-muted">Status: is not currently available</small></li>
                         {% endif %}
 
-                        <li class= "list-group-item"><small class="text-muted">Last updated 3 mins ago</small></li>
                     </ul>
-                <div class="container">
-                    <div class="card-body">
+                    <div class="container">
+                        <div class="card-body">
 
-                        <div class="btn-group d-flex justify-content-center" role="group" aria-label="Third group">
                             <div class="btn-group d-flex justify-content-center" role="group" aria-label="Third group">
-                                {% if user.is_authenticated and book.seller == current_user %}
-
-                                    <a href="{% url 'update book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Edit</a>
-                                    <a href="{% url 'delete book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Delete</a>
+                                <div class="btn-group d-flex justify-content-center" role="group" aria-label="Third group">
+                                    {% if user.is_authenticated and book.seller == current_user %}
+                                        <a href="{% url 'update book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Edit</a>
+{% if not book.is_available %}
+                                        <a href="{% url 'remove' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Retrieve</a>
+{% else %}
+                                        <a href="{% url 'retrieve book' %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Retrieve</a>
+{% endif %}
+                                        <a href="{% url 'delete book' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Delete</a>
                                     {% elif user.is_authenticated and not book.seller == current_user %}
-                                    <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Details</a>
-                                    <a href="{% url 'buy' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Buy Book</a>
-                                    {% elif not user.is_authenticated  %}
-                                    <a href="{% url 'book details' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Details</a>
-                                {% endif %}
-
+                                        <a href="{% url 'buy' book.pk %}" class="btn btn-outline-secondary btn-sm" style="width: 90px">Buy Book</a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-
-                    </div>
                     </div>
                 </div>
             </div>

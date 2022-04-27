@@ -7,6 +7,4 @@ urlpatterns = [
     path('buy/<int:pk>/', add_to_cart, name='buy'),
     path('remove/<int:pk>/', remove_from_cart, name='remove'),
 
-
-
 ]

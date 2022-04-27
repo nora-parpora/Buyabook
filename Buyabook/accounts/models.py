@@ -55,7 +55,7 @@ class Profile(models.Model):
         unique=True,
     )
 
-    phone =models.CharField(
+    phone = models.CharField(
         max_length=20,
         null=True,
         blank=True,
@@ -85,10 +85,3 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
-"""
-ToDo:
-Phone number
-Address - ? whether to apply a model or a prop
-Address - 121
-
-"""

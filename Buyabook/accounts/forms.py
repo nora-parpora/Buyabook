@@ -1,9 +1,8 @@
 from django import forms
-from django.contrib.auth import forms as auth_forms, get_user_model, password_validation
-from django.contrib.auth.forms import SetPasswordForm
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth import forms as auth_forms, get_user_model
 
-from Buyabook.accounts.helpers import BootstrapFormMixin, DisabledFieldsFormMixin, get_bab_obj
+
+from Buyabook.accounts.helpers import BootstrapFormMixin
 from Buyabook.accounts.models import Profile
 from Buyabook.books.models import Book
 from Buyabook.cart.models import Cart
@@ -35,6 +34,7 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     )
     city = forms.CharField(
         max_length=Profile.CITY_MAX_LENGTH,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Enter your city here',
@@ -42,6 +42,7 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         )
     )
     address = forms.CharField(
+        required=False,
         widget=forms.Textarea(
             attrs={
                 'placeholder': 'Enter your address here',
@@ -51,11 +52,13 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     )
 
     phone = forms.CharField(
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'placeholder': '+359XXXXXXXXX',
             })
     )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
@@ -67,7 +70,7 @@ class CreateProfileForm(BootstrapFormMixin, auth_forms.UserCreationForm):
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
             email=self.cleaned_data['email'],
-            city = self.cleaned_data['city'],
+            city=self.cleaned_data['city'],
             address=self.cleaned_data['address'],
             phone=self.cleaned_data['phone'],
             user=user,
@@ -105,25 +108,18 @@ class UpdateProfileForm(BootstrapFormMixin, forms.ModelForm):
                 attrs={
                     'rows': 1,
                 }),
-
         }
 
 
-class DeleteProfileForm(BootstrapFormMixin, DisabledFieldsFormMixin, forms.ModelForm):
+class DeleteProfileForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
-        #self._init_disabled_fields()
 
     def save(self, commit=True):
-
         Book.objects.filter(seller=self.instance).delete()
         self.instance.delete()
         return self.instance
-
-    # class Meta:
-    #     model = Profile
-    #     fields = ('first_name', 'last_name', 'phone', 'email', 'city', 'address')
 
 
 class BaBPasswordChangeForm(forms.Form):
@@ -147,7 +143,6 @@ class BaBPasswordChangeForm(forms.Form):
         self.user = user
         super().__init__(*args, **kwargs)
 
-
     def save(self, commit=True):
         password = self.cleaned_data["new_password1"]
         self.user.set_password(password)
@@ -155,7 +150,5 @@ class BaBPasswordChangeForm(forms.Form):
             self.user.save()
         return self.user
 
-
     class Meta:
         model = get_user_model()
-

@@ -1,17 +1,9 @@
-from django.contrib import messages
-from django.contrib.auth import views as auth_views, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm, SetPasswordForm
-from django.contrib.auth.models import User
-from django.http import request, HttpRequest
-
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import views as auth_views
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView, DeleteView, ListView
-from django.views.generic.edit import FormMixin
 
-from Buyabook.accounts.forms import CreateProfileForm, UpdateProfileForm, DeleteProfileForm, BaBPasswordChangeForm
+from Buyabook.accounts.forms import CreateProfileForm, UpdateProfileForm, BaBPasswordChangeForm
 from Buyabook.accounts.helpers import AuthCheckView, CurrentUserView, get_bab_obj
 from Buyabook.accounts.models import Profile, BaBUser
 from Buyabook.books.models import Book
@@ -85,6 +77,7 @@ class ChangeUserPasswordView(auth_views.PasswordChangeView):
     template_name = 'change_password.html'
     form_class = BaBPasswordChangeForm
     success_url = reverse_lazy('update profile')
+
     def get_object(self, queryset=None):
         return get_bab_obj(Profile, pk=self.request.user.id)
 
@@ -115,7 +108,7 @@ class DeleteProfileView(DeleteView):
         return instance
 
 
-class RequestDeleteView( DeleteView):
+class RequestDeleteView(DeleteView):
     """
     Sub-class the DeleteView to restrict a User from deleting other
     user's data.
@@ -220,9 +213,3 @@ class PageNotFoundView(TemplateView):
     #         'pets': pets,
     #     })
     #     return context
-
-
-
-
-
-

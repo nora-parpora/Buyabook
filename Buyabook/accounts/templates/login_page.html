@@ -3,21 +3,25 @@
 
     <div class = 'form-control '>
         <h3 class="text-center">Login to Your Profile</h3>
-        <div class="row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6">
-
+        <div class="row justify-content-center">
+            <div class="col-lg-3 justify-content-center"></div>
+                <div class="col-lg-6">
+                <div class="d-flex justify-content-center"></div>
                 <!-- Login Form -->
-                <form method="POST" style='border-top: 1px solid grey; border-bottom: 1px solid grey; margin: 1% 2%; padding: 2% 2% '>
+                <form method="POST" class="my-4 container justify-content-center">
+                    <div class="my-4 container justify-content-center">
                     {% csrf_token %}
                     {{ form.as_p }}
-
-                    <button class="btn btn-secondary btn-sm" type="submit">Log in</button>
+                </div>
+<div class="container my-4 justify-content-center">
+                    <button class="btn btn-secondary btn-sm " type="submit">Log in</button>
+</div>
                 </form>
+            </div>
                 <!-- End Login Form -->
 
             </div>
-            <div class="col-lg-3" ></div>
+
         </div>
 
         <div class="select2-container justify-content-center">
@@ -25,10 +29,11 @@
             <div class="row">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
-
-                    <h6 class="text-muted" >
+<div class="d-flex justify-content-center">
+                    <h6 class="text-muted justify-content-center" >
                         You don't have an account? <a href="{% url 'register' %}" > <strong> Register here </strong></a>
                     </h6>
+    </div>
                 </div>
             </div>
 

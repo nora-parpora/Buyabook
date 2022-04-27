@@ -5,7 +5,7 @@ from django.views.generic.base import ContextMixin
 from Buyabook.accounts.models import Profile
 
 
-class BootstrapFormMixin:  # place inheritance for class ProfileForm
+class BootstrapFormMixin:
 
     fields = {}
 
@@ -26,13 +26,13 @@ class AuthCheckView(View):
         return super().dispatch(request, *args, **kwargs)
 
 
-class EditDeleteBookPermMixin: # TODO - add the Mixin to catalogueView
+class EditDeleteBookPermMixin:  # TODO - add the Mixin to catalogueView
     pass
 
 
 def get_bab_obj(klass, *args, **kwargs):
     try:
-        return get_object_or_404(klass,*args, **kwargs)
+        return get_object_or_404(klass, *args, **kwargs)
     except:
         pass
     return
@@ -44,19 +44,18 @@ class CurrentUserView(ContextMixin, View):
         context['current_user'] = get_bab_obj(Profile, pk=self.request.user.id)
         return context
 
-
-class DisabledFieldsFormMixin:
-    disabled_fields = '__all__'
-    fields = {}
-
-    def _init_disabled_fields(self):
-        for name, field in self.fields.items():
-            if self.disabled_fields != '__all__' and name not in self.disabled_fields:
-                continue
-
-            if not hasattr(field.widget, 'attrs'):
-                setattr(field.widget, 'attrs', {})
-            # if isinstance(field, forms.ChoiceField):
-            #     field.widget.attrs['disabled'] = 'readonly'
-            else:
-                field.widget.attrs['readonly'] = 'readonly'
+#
+# class DisabledFieldsFormMixin:
+#     disabled_fields = '__all__'
+#     fields = {}
+#
+#     def _init_disabled_fields(self):
+#         for name, field in self.fields.items():
+#             if self.disabled_fields != '__all__' and name not in self.disabled_fields:
+#                 continue
+#
+#             if not hasattr(field.widget, 'attrs'):
+#                 setattr(field.widget, 'attrs', {})
+#
+#             else:
+#                 field.widget.attrs['readonly'] = 'readonly'

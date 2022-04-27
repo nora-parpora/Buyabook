@@ -6,7 +6,7 @@ from Buyabook.accounts.models import Profile
 from Buyabook.books.models import Book
 
 
-class AddBookForm(forms.ModelForm,BootstrapFormMixin):
+class AddBookForm(forms.ModelForm, BootstrapFormMixin):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
@@ -47,7 +47,8 @@ class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Book
-        exclude = ('seller', 'cart',) #  ToDo Show widget value for image to display current picture {{ widget.value.url }}
+        exclude = ('seller', 'cart',)  # ToDo
+        # Show widget value for image to display current picture {{ widget.value.url }}
 
         widgets = {
             'description': forms.Textarea(
@@ -59,3 +60,13 @@ class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):
         }
 
 
+class RetrieveBookForm(BootstrapFormMixin, forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+
+    class Meta:
+        model = Book
+        exclude = ('seller', 'cart',)

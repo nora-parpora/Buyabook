@@ -1,13 +1,12 @@
-
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.shortcuts import render
 
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
 
 from Buyabook.accounts.helpers import CurrentUserView
 
-from Buyabook.books.forms import AddBookForm, UpdateBookForm
+from Buyabook.books.forms import AddBookForm, UpdateBookForm, RetrieveBookForm
 from Buyabook.books.models import Book
 
 
@@ -23,9 +22,7 @@ class AddBookView(CreateView):
 
 
 class CatalogueView(ListView, CurrentUserView):
-    # model = Book
     template_name = 'catalogue.html'
-    #  queryset = Book.objects.all()
     context_object_name = 'books'
 
     def get_queryset(self):
@@ -45,7 +42,8 @@ class CatalogueView(ListView, CurrentUserView):
 
         # query = self.request.GET.get("q")
         # if query:
-        #     object_list = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query) | Q(description__icontains=query)).order_by("title")
+        #     object_list = Book.objects.filter(Q(title__icontains=query) | /
+        #     Q(author__icontains=query) | Q(description__icontains=query)).order_by("title")
         #     # object_list = Book.objects.filter(
         #     #     Q(pk=query) )
         # else:
@@ -58,7 +56,7 @@ class BookDetailsView(DetailView, CurrentUserView):
     template_name = 'book_details.html'
 
 
-class UpdateBookView(UpdateView,CurrentUserView):
+class UpdateBookView(UpdateView, CurrentUserView):
     """  Additional Library: django-cleanup==6.0.0 which is added to the INSTALLED_APPS/
     is handling the deletion from the DB """
     model = Book
@@ -68,24 +66,23 @@ class UpdateBookView(UpdateView,CurrentUserView):
 
     def dispatch(self, request, *args, **kwargs):
         if not self.get_object().is_available():
-            return redirect('404')
+            return render(request, 'restricted_for_editing.html', {'book': self.get_object()})
         return super().dispatch(request, *args, **kwargs)
 
 
-class DeleteBookView(DeleteView,CurrentUserView):
+class RetrieveBookView(TemplateView, CurrentUserView):
     model = Book
-    #  form_class = DeleteProfileForm
+    template_name = 'retrieve_success.html'
+
+
+class DeleteBookView(DeleteView, CurrentUserView):
+    model = Book
     template_name = 'delete_book.html'
     success_url = reverse_lazy('index')
 
-    # def get_object(self, queryset=None):
-    #     instance = get_bab_obj(Book, pk=self.request.book.pk)
-    #     return instance
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['book'] = get_bab_obj(Book, pk=self.request.user.id)
-    #     return context
+class RestrictedForEditView(TemplateView):
+    template_name = 'restricted_for_editing.html'
 
 
 class AvailableBooksView(ListView):
