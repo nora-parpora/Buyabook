@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-g3n#2@y!7b#8tr83k#fd$7pw6v-(7q6lj7x6%4(gk)y7j1jzjj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1',]
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'ec2-99-80-170-190.eu-west-1.compute.amazonaws.com',
+                 ]
 
 
 # Application definition
@@ -53,6 +55,8 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -86,21 +90,35 @@ WSGI_APPLICATION = 'Buyabook.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'BaB',
-        'USER': 'NoraP',
-        'PASSWORD': 'NoraP',
-        'HOST': '127.0.0.1',
+        'NAME': 'd6g5vahnpj9s9b',
+        'USER': 'pcrcstjowoyfag',
+        'PASSWORD': '656914da7d496d32b8f0074438eb08c496d44dc00d34b39b0da9ef72835e07df',
+        'HOST': 'ec2-99-80-170-190.eu-west-1.compute.amazonaws.com',
         'PORT': '5432'
 
-
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'BaB',
+#         'USER': 'NoraP',
+#         'PASSWORD': 'NoraP',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432'
+#
+#
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.sqlite3',
+#     #     'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
