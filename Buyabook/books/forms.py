@@ -59,13 +59,10 @@ class UpdateBookForm(BootstrapFormMixin, forms.ModelForm):
 
         }
 
-
 class RetrieveBookForm(BootstrapFormMixin, forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-
 
     class Meta:
         model = Book

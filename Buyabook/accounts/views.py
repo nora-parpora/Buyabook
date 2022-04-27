@@ -12,7 +12,6 @@ from Buyabook.books.models import Book
 class UserRegisterView(CreateView):
     form_class = CreateProfileForm
     template_name = 'create_profile.html'
-    #  messages.success(request, f'Successfully created an account!')
     success_url = reverse_lazy('login')
 
 
@@ -21,21 +20,6 @@ class HomeView(ListView):  # Showing the landing page when the user is not logge
     queryset = Book.objects.all()
     context_object_name = 'books'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['books'] = Book.objects.all()
-
-
-# class IndexView(TemplateView, AuthCheckView):
-#     template_name = 'index.html'
-    # def logout_view(self, request):
-    #     logout(request)
-    #     return redirect('login')
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     return context
-
 
 class DashboardView(ListView, CurrentUserView, AuthCheckView):
     queryset = Book.objects.all()
@@ -43,14 +27,9 @@ class DashboardView(ListView, CurrentUserView, AuthCheckView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # profile = get_object_or_404(Profile, pk=self.request.user.id)
-        # context['profile'] = profile
         context['books'] = Book.objects.filter(seller_id=self.request.user.id)
         context['all_books'] = Book.objects.all()
         return context
-
-        #  books = Book.objects.filter(profile__seller_id=self.request.user.pk)
-        #     #'is_seller': self.object.user_id == self.request.user.id,
 
 
 class UserLoginView(auth_views.LoginView):
@@ -91,15 +70,9 @@ class ProfileDetailsView(DetailView, UserLoginView):
         profile = get_bab_obj(Profile, pk=self.request.user.id)
         return profile
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['profile'] = get_bab_obj(Profile, pk=self.request.user.id)
-    #     return context
-
 
 class DeleteProfileView(DeleteView):
     model = BaBUser
-    #  form_class = DeleteProfileForm
     template_name = 'delete_profile.html'
     success_url = reverse_lazy('index')
 
@@ -140,76 +113,3 @@ def logged_in_switch_view(logged_in_view, logged_out_view):
 class PageNotFoundView(TemplateView):
     template_name = '404.html'
 
-
-#  def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     profile = get_object_or_404(Profile, pk=self.request.user.id)
-    #     #user = get_object_or_404(User, pk=self.request.user.id)
-    #     context['form'] = self.form_class(instance=profile)
-    #     return context
-
-
-# class DeleteProfileView(DeleteView):
-#     model = Profile
-#     #form_class = DeleteProfileForm
-#     template_name = 'delete_profile.html'
-#     success_url = reverse_lazy('login')
-#
-#     def get_object(self, queryset=None):
-#         return get_object_or_404(Profile, pk=self.request.user.id)
-#
-#     # def get_context_data(self, **kwargs):
-#     #     context = super().get_context_data(**kwargs)
-#     #     profile = get_object_or_404(Profile, pk=self.request.user.id)
-#     #     #user = get_object_or_404(User, pk=self.request.user.id)
-#     #     context['form'] = self.form_class(instance=profile)
-#     #     return context
-
-
-# class UpdateProfileView(UpdateView):
-#     model = Profile
-#     form_class = UpdateProfileForm
-#     template_name = 'update_profile.html'
-#     success_url = 'index.html'
-#
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         user = get_object_or_404(Profile, pk=self.kwargs.get('pk')).user
-#         profile = Profile.objects.get(pk=user.pk)
-#
-#         form = self.form_class(instance=profile)
-#         context['form'] = form
-#         a=5
-
-#  form = self.form_class(instance=user)
-#  context['form'] = self.form_class(instance=user)
-
-
-# class UpdateProfileView(UpdateView):
-#     model = Profile
-#     fields = ['first_name', 'last_name', 'email', 'phone', 'city', 'address',]
-#     template_name = 'update_profile.html'
-#     success_url = 'index.html'
-#     user = get_object_or_404(Profile, pk=request.user.id
-#     user_form = UpdateProfileForm(instance=user.profile.pk)
-#
-#     def get_object(self, queryset=None):
-#         user = get_object_or_404(Profile, pk=request.user.id
-
-    # def get_context_data(self, **kwargs):
-    #     user = get_object_or_404(Profile, pk=self.kwargs.get('pk')).user
-    #
-    #     #context['user_form']= self.user_form_class(instance=user)
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #
-    #     user = get_object_or_404(Profile, pk=self.kwargs.get('pk')).user
-    #     #user_form = UserChangeForm(instance=user)
-    #     context.update({
-    #         'total_likes_count': total_likes_count,
-    #         'total_pet_photos_count': total_pet_photos_count,
-    #         'is_seller': self.object.user_id == self.request.user.id,
-    #         'pets': pets,
-    #     })
-    #     return context

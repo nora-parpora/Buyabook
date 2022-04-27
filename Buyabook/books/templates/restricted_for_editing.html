@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+<div class="container mx-auto">
+
+    <div class="d-flex justify-content-center">
+        <img style="width: 20%"
+             src="/static/images/book-gc9deb5f97_1280.png"  class="my-6 max-width: 70%; and height: auto; img-thumbnail rounded-start" alt="">
+    </div>
+    <div class=" m-5 d-flex justify-content-center">
+
+            <div class=" row col-lg-8 justify-content-center">
+
+<div class = 'container justify-content-center'>
+    <div class=" m-3 d-flex justify-content-center">
+        <h3 class="m-3 justify-content-center">You cannot edit a book that is added in a cart. </h3><br></div>
+        <div class=" m-3 d-flex justify-content-center"><h4>Retrieve the book first.</h4>
+    </div>
+        </div>
+    </div>
+    </div>
+        <div class=" m-3 d-flex justify-content-center">
+                <a href="{% url 'book details' book.pk %}" class="btn btn-lg btn-secondary">Go to Retrieve Page</a>
+            </div>
+     </div>
+{% endblock %}

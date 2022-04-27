@@ -3,8 +3,6 @@
 
     <div class="container justify-content-center" >
 
-
-
             <div class="d-flex justify-content-center" style=' margin: 1% 2%; padding: 2% 2% '>
 
                 <div class = 'form-control '>
@@ -12,18 +10,14 @@
 
                         <form method="POST" class="d-flex justify-content-center" style='border-top: 1px solid grey; border-bottom: 0px solid grey; margin: 1% 2%; padding: 2% 2% '>
                             <div class='row' style= 'padding-top: 1%'>
-
                                     {% csrf_token %}
                                     {{ form.as_p }}
 
                                     <button class="btn btn-secondary btn-danger" type="submit">Delete Profile</button>
                                 </div>
-
                         </form>
                     </div>
                     </div>
                 </div>
-
-
 
 {% endblock %}

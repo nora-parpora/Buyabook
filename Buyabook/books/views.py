@@ -40,15 +40,6 @@ class CatalogueView(ListView, CurrentUserView):
             object_list = Book.objects.all()
         return object_list
 
-        # query = self.request.GET.get("q")
-        # if query:
-        #     object_list = Book.objects.filter(Q(title__icontains=query) | /
-        #     Q(author__icontains=query) | Q(description__icontains=query)).order_by("title")
-        #     # object_list = Book.objects.filter(
-        #     #     Q(pk=query) )
-        # else:
-        #     object_list = Book.objects.all()
-        # return object_list
 
 
 class BookDetailsView(DetailView, CurrentUserView):
