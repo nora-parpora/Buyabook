@@ -1,13 +1,13 @@
 [
   {
-    "model": "myapp.group",
+    "model": "auth.group",
     "pk": 1,
     "fields": {
       "name": "auth_level_1"
     }
   },
   {
-    "model": "myapp.group",
+    "model": "auth.group",
     "pk": 2,
     "fields": {
       "name": "auth_level_2"
