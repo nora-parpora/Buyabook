@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g3n#2@y!7b#8tr83k#fd$7pw6v-(7q6lj7x6%4(gk)y7j1jzjj
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1',
-                 'ec2-99-80-170-190.eu-west-1.compute.amazonaws.com',
+                 'buyabook-demo.herokuapp.com',
                  ]
 
 
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
