@@ -19,15 +19,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g3n#2@y!7b#8tr83k#fd$7pw6v-(7q6lj7x6%4(gk)y7j1jzjj'
+SECRET_KEY = os.getenv('SECRET_KEY', 'sk')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1',
-                 'buyabook-demo.herokuapp.com',
-                 ]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(' ')
 
 
 # Application definition
@@ -39,9 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # 'crispy_forms',
-    # 'crispy_bootstrap5',
 
     'Buyabook.accounts',
     'Buyabook.books',
@@ -90,54 +83,37 @@ WSGI_APPLICATION = 'Buyabook.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd6g5vahnpj9s9b',
-        'USER': 'pcrcstjowoyfag',
-        'PASSWORD': '656914da7d496d32b8f0074438eb08c496d44dc00d34b39b0da9ef72835e07df',
-        'HOST': 'ec2-99-80-170-190.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432'
+        'NAME': os.getenv('DB_NAME', 'BaB'),
+        'USER': os.getenv('DB_USER', 'NoraP'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'NoraP'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '5432')
 
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'BaB',
-#         'USER': 'NoraP',
-#         'PASSWORD': 'NoraP',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432'
-#
-#
-#     # 'default': {
-#     #     'ENGINE': 'django.db.backends.sqlite3',
-#     #     'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+AUTH_PASSWORD_VALIDATORS = []
+if os.getenv('APP_ENVIRONMENT') == 'prod':
+    AUTH_PASSWORD_VALIDATORS = [
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ]
 
 
 # Internationalization
@@ -167,16 +143,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-
-# STATIC_URL = 'static/'
-# STATICFILES_DIRS = (
-#     BASE_DIR / 'static',
-# )
-# #STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -191,24 +163,24 @@ if DEBUG:
     l.setLevel(logging.DEBUG)
     l.addHandler(logging.StreamHandler())
 
+LOGGING_LEVEL = 'DEBUG'
+
+if os.getenv('APP_ENVIRONMENT') == 'prod':
+    LOGGING_LEVEL = 'INFO'
 
 LOGGING = {
     'version': 1,
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        }
-    },
     'handlers': {
         'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
+            # DEBUG, WARNING, INFO, ERROR, CRITICAL,
+            'level': LOGGING_LEVEL,
+            'filters': [],
             'class': 'logging.StreamHandler',
         }
     },
     'loggers': {
         'django.db.backends': {
-            'level': 'DEBUG',
+            'level': LOGGING_LEVEL,
             'handlers': ['console'],
         }
     }
