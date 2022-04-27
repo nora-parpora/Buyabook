@@ -35,9 +35,9 @@
                                     <li class="list-group-item">Author: {{ book.author }}</li>
                                     <li class="list-group-item">Price: {{ book.price|floatformat:2 }} € </li>
                                     {% if book.is_available %}
-                                        <li class= "list-group-item"><small class="text-muted">Status: is available</small></li>
+                                        <li class= "list-group-item"><small class="text-muted">Status: available</small></li>
                                     {% else %}
-                                        <li class= "list-group-item"><small class="text-muted">Status: is not currently available</small></li>
+                                        <li class= "list-group-item"><small class="text-muted">Status: not available</small></li>
                                     {% endif %}
                                 </ul>
                             </div>
