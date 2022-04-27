@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import cloudinary
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -187,3 +189,9 @@ LOGGING = {
 }
 
 AUTH_USER_MODEL = 'accounts.BaBUser'
+
+cloudinary.config(
+  cloud_name = os.getenv("CLOUDINARY_NAME"),
+  api_key = os.getenv("CLOUDINARY_KEY"),
+  api_secret = os.getenv("CLOUDINARY_SECRET")
+)
