@@ -1,4 +1,5 @@
 from django import test as django_test
+from django.urls import reverse, reverse_lazy
 
 from Buyabook.accounts.models import BaBUser, Profile
 from Buyabook.books.models import Book
@@ -9,7 +10,6 @@ class BookCreateTest(django_test.TestCase):
         'username': 'testuser',
         'password': 'testpassword123',
     }
-
     VALID_PROFILE_DATA = {
         'first_name': 'Test',
         'last_name': 'Testov',
@@ -52,3 +52,39 @@ class BookCreateTest(django_test.TestCase):
         self.assertEquals('FirstBook', book.title)
         self.assertEquals(2.0, book.price)
         self.assertTrue( book.is_available())
+
+
+class BookEditViewTest(django_test.TestCase):
+    VALID_USER_CREDENTIALS = {
+        'username': 'testuser',
+        'password': 'testpassword123',
+    }
+    VALID_PROFILE_DATA = {
+        'first_name': 'Test',
+        'last_name': 'Testov',
+        'email': 'testuser@email.com',
+    }
+    VALID_BOOK_DETAILS = {
+        'title': 'FirstBook',
+        'author': 'Author',
+        'price': '2',
+        }
+
+    def test_edit_book_url_when_seller_wants_to_edit__expect_success(self):
+
+        user = BaBUser(**self.VALID_USER_CREDENTIALS)
+        user.save()
+
+        profile = Profile.objects.create(**self.VALID_PROFILE_DATA, user=user)
+        profile.save()
+
+        # Book(**self.VALID_BOOK_DETAILS, seller=profile).save()
+        # book = Book.objects.get(pk=1)
+        book = Book(**self.VALID_BOOK_DETAILS, seller=profile)
+
+        book.save()
+        pk = book.pk
+
+        response = self.client.get(reverse_lazy('update book', kwargs={
+            'pk': pk, }))
+        self.assertEquals(response.status_code, 200)

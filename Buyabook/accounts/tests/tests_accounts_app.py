@@ -23,7 +23,6 @@ class IndexPageTest(django_test.TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'catalogue.html')
 
-
     def test_register_status_code(self):
         response = self.client.get('/accounts/register/')
         self.assertEquals(response.status_code, 200)
