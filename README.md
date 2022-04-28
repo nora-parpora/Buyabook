@@ -14,7 +14,7 @@ Consider refactoring into a session based cart - pros/cons.
 If the user has chosen books from multiple sellers, individual emails would be sent.
 
 * Create a store app:
-A new app in the project/ model should be introduced as a individual store area for each seller which could be useful for bigger sellers as well as for filtering purposes.
+A new app in the project / model should be introduced as an individual store area for each seller which could be useful for bigger sellers as well as for filtering purposes.
 
 * Adding a category
 Create a category input request from a user to 'staff' members so that new categories could be added to the drop down menu.
