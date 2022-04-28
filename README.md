@@ -1,7 +1,7 @@
 # Buyabook
 
 This app, when completed, will be aimed to serve as a platform where users would be able to register and sell their new or second-hand books to other registered users.
-The users would be able to have a view on all books available (through the "Buyabook" menu link, they would be able to see only the books they are selling (through "My Dashboard") and also to filter only the books that they can buy (through the "Catalogue" view).
+The users would be able to have a view on all books available (through the "Catalogue" menu link, they would be able to see only the books they are selling (through "My Dashboard") and also to filter only the books that they can buy (through the "Buyabook" view).
 
 When a user adds a book in their cart, that is saved in the database so that the user could open their cart from another device to finish the purchase.
 If any book remains longer in someone's cart, the seller would be able to "retrieve" the book and make it again "available" for purchase by another user or for editing or for deletion from the personal Dashboard.
