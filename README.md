@@ -13,8 +13,8 @@ When a user wants to complete an order, if no address is presented during regist
 Consider refactoring into a session based cart - pros/cons.
 If the user has chosen books from multiple sellers, individual emails would be sent.
 
-*Create a store app:
+* Create a store app:
 A new app in the project/ model should be introduced as a individual store area for each seller which could be useful for bigger sellers as well as for filtering purposes.
 
-*Adding a category
+* Adding a category
 Create a category input request from a user to 'staff' members so that new categories could be added to the drop down menu.
