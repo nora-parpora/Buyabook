@@ -1,4 +1,5 @@
 from django import test as django_test
+from django.contrib.auth import get_user_model
 from django.urls import reverse, reverse_lazy
 
 from Buyabook.accounts.models import BaBUser, Profile
@@ -28,7 +29,7 @@ class BookCreateTest(django_test.TestCase):
         }
 
     def test_no_books_in_initial_book_set__expect_success(self):
-        user = BaBUser(**self.VALID_USER_CREDENTIALS)
+        user = get_user_model().objects.create_user(**self.VALID_USER_CREDENTIALS)
         user.save()
 
         profile = Profile.objects.create(**self.VALID_PROFILE_DATA, user=user)
@@ -72,18 +73,17 @@ class BookEditViewTest(django_test.TestCase):
 
     def test_edit_book_url_when_seller_wants_to_edit__expect_success(self):
 
-        user = BaBUser(**self.VALID_USER_CREDENTIALS)
+        user = get_user_model().objects.create_user(**self.VALID_USER_CREDENTIALS)
         user.save()
 
         profile = Profile.objects.create(**self.VALID_PROFILE_DATA, user=user)
         profile.save()
 
-        # Book(**self.VALID_BOOK_DETAILS, seller=profile).save()
-        # book = Book.objects.get(pk=1)
         book = Book(**self.VALID_BOOK_DETAILS, seller=profile)
-
         book.save()
         pk = book.pk
+
+        self.client.login(**self.VALID_USER_CREDENTIALS)
 
         response = self.client.get(reverse_lazy('update book', kwargs={
             'pk': pk, }))

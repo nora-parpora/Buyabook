@@ -20,12 +20,12 @@ class UserProfileDetailsModelTest(django_test.TestCase):
     }
 
     def test_create_user_with_correct_data__expect_success(self):
-        user = BaBUser(**self.VALID_USER_CREDENTIALS)
+        user = get_user_model().objects.create_user(**self.VALID_USER_CREDENTIALS)
         user.save()
         self.assertIsNotNone(BaBUser.pk)
 
     def test_create_profile_with_correct_data__expect_success(self):
-        user = BaBUser.objects.create_user(**self.VALID_USER_CREDENTIALS)
+        user = get_user_model().objects.create_user(**self.VALID_USER_CREDENTIALS)
         user.save()
         profile = Profile.objects.create(**self.VALID_PROFILE_DATA, user=user)
         profile.save()
@@ -44,7 +44,7 @@ class UserProfileDetailsModelTest(django_test.TestCase):
         self.assertIsNotNone(context.exception)
 
     def test_create_profile_with_incorrect_data_in_first_name__expect_failure(self):
-        user = BaBUser.objects.create_user(**self.VALID_USER_CREDENTIALS)
+        user = get_user_model().objects.create_user(**self.VALID_USER_CREDENTIALS)
         user.save()
         profile = Profile.objects.create(first_name='Test1', last_name='Testov', email='test@test.com', user=user)
 
@@ -55,7 +55,7 @@ class UserProfileDetailsModelTest(django_test.TestCase):
 
 
     def test_create_profile_with_incorrect_data_in_last_name__expect_failure(self):
-        user = BaBUser.objects.create_user(**self.VALID_USER_CREDENTIALS)
+        user = get_user_model().objects.create_user(**self.VALID_USER_CREDENTIALS)
         user.save()
         profile = Profile.objects.create(first_name='Test', last_name='Test&', email='test@test.com', user=user)
 
@@ -66,7 +66,7 @@ class UserProfileDetailsModelTest(django_test.TestCase):
 
 
     def test_create_profile_with_incorrect_data_in_email_name__expect_failure(self):
-        user = BaBUser.objects.create_user(**self.VALID_USER_CREDENTIALS)
+        user = get_user_model().objects.create_user(**self.VALID_USER_CREDENTIALS)
         user.save()
         profile = Profile.objects.create(first_name='Test', last_name='Testov', email='test.test.com', user=user)
 
