@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, get_object_or_404
 from django.views import View
 from django.views.generic.base import ContextMixin
@@ -36,6 +37,7 @@ def get_bab_obj(klass, *args, **kwargs):
     except:
         pass
     return
+
 
 
 class CurrentUserView(ContextMixin, View):

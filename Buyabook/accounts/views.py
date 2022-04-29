@@ -1,4 +1,5 @@
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DetailView, DeleteView, ListView
@@ -21,7 +22,7 @@ class HomeView(ListView):  # Showing the landing page when the user is not logge
     context_object_name = 'books'
 
 
-class DashboardView(ListView, CurrentUserView, AuthCheckView):
+class DashboardView(LoginRequiredMixin, ListView, CurrentUserView, AuthCheckView):
     queryset = Book.objects.all()
     template_name = 'catalogue.html'
 
@@ -42,7 +43,7 @@ class UserLoginView(auth_views.LoginView):
         return super().get_success_url()
 
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'update_profile.html'
@@ -52,7 +53,7 @@ class UpdateProfileView(UpdateView):
         return get_bab_obj(Profile, pk=self.request.user.id)
 
 
-class ChangeUserPasswordView(auth_views.PasswordChangeView):
+class ChangeUserPasswordView(LoginRequiredMixin, auth_views.PasswordChangeView):
     template_name = 'change_password.html'
     form_class = BaBPasswordChangeForm
     success_url = reverse_lazy('update profile')
@@ -61,7 +62,7 @@ class ChangeUserPasswordView(auth_views.PasswordChangeView):
         return get_bab_obj(Profile, pk=self.request.user.id)
 
 
-class ProfileDetailsView(DetailView, UserLoginView):
+class ProfileDetailsView(LoginRequiredMixin, DetailView, UserLoginView):
     model = Profile
     template_name = 'profile_details.html'
     context_object_name = 'profile'
@@ -71,7 +72,7 @@ class ProfileDetailsView(DetailView, UserLoginView):
         return profile
 
 
-class DeleteProfileView(DeleteView):
+class DeleteProfileView(LoginRequiredMixin, DeleteView):
     model = BaBUser
     template_name = 'delete_profile.html'
     success_url = reverse_lazy('index')

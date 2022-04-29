@@ -1,5 +1,7 @@
+from django.contrib.auth.backends import UserModel
 from django.db.models import Q
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
@@ -10,7 +12,7 @@ from Buyabook.books.forms import AddBookForm, UpdateBookForm, RetrieveBookForm
 from Buyabook.books.models import Book
 
 
-class AddBookView(CreateView):
+class AddBookView(LoginRequiredMixin, CreateView):
     template_name = 'add_book.html'
     form_class = AddBookForm
     success_url = reverse_lazy('index')
@@ -41,13 +43,12 @@ class CatalogueView(ListView, CurrentUserView):
         return object_list
 
 
-
 class BookDetailsView(DetailView, CurrentUserView):
     model = Book
     template_name = 'book_details.html'
 
 
-class UpdateBookView(UpdateView, CurrentUserView):
+class UpdateBookView(LoginRequiredMixin, UpdateView, CurrentUserView):
     """  Additional Library: django-cleanup==6.0.0 which is added to the INSTALLED_APPS/
     is handling the deletion from the DB """
     model = Book
@@ -61,12 +62,12 @@ class UpdateBookView(UpdateView, CurrentUserView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class RetrieveBookView(TemplateView, CurrentUserView):
+class RetrieveBookView(LoginRequiredMixin, TemplateView, CurrentUserView):
     model = Book
     template_name = 'retrieve_success.html'
 
 
-class DeleteBookView(DeleteView, CurrentUserView):
+class DeleteBookView(LoginRequiredMixin, DeleteView, CurrentUserView):
     model = Book
     template_name = 'delete_book.html'
     success_url = reverse_lazy('index')

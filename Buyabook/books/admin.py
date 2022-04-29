@@ -7,7 +7,7 @@ from Buyabook.books.models import Category, Book
 class CategoryAdmin(admin.ModelAdmin):
     def books_count(self, obj):
         return Book.objects.all().filter(category_id=obj.pk)
-    list_display = ('name', 'books_count')
+    list_display = ('pk', 'name', 'books_count')
 
 
 @admin.register(Book)
